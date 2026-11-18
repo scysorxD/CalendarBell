@@ -9,5 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="CalendarBell.Core.Tests" />
+    <InternalsVisibleTo Include="CalendarBell.Infrastructure.Tests" />
   </ItemGroup>
 </Project>
