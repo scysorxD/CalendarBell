@@ -91,7 +91,7 @@ internal static class SetupActions
         Process.Start(info)?.Dispose();
     }
 
-    public static async Task UninstallAsync(DataPaths paths, bool deleteUserData)
+    public static async Task UninstallAsync(DataPaths paths, bool deleteUserData, bool removeInstallDirectory = true)
     {
         var installer = CreateInstaller();
         await StopRunningInstanceAsync(paths).ConfigureAwait(false);
@@ -99,7 +99,7 @@ internal static class SetupActions
         {
             new StartupRegistration(installer.Paths.InstalledExe).Disable();
             WindowsToastService.UnregisterAll();
-            installer.Uninstall(paths, deleteUserData, removeInstallDirectory: true);
+            installer.Uninstall(paths, deleteUserData, removeInstallDirectory);
         }).ConfigureAwait(false);
     }
 }

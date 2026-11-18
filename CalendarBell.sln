@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{07C2787E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarBell.MockFeedServer", "tools\CalendarBell.MockFeedServer\CalendarBell.MockFeedServer.csproj", "{ECF9C2F9-5C72-44B5-8960-577B857752DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarBell.Windows.SmokeTests", "tests\CalendarBell.Windows.SmokeTests\CalendarBell.Windows.SmokeTests.csproj", "{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,18 @@ Global
 		{ECF9C2F9-5C72-44B5-8960-577B857752DE}.Release|x64.Build.0 = Release|Any CPU
 		{ECF9C2F9-5C72-44B5-8960-577B857752DE}.Release|x86.ActiveCfg = Release|Any CPU
 		{ECF9C2F9-5C72-44B5-8960-577B857752DE}.Release|x86.Build.0 = Release|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Debug|x64.Build.0 = Debug|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Debug|x86.Build.0 = Debug|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Release|x64.ActiveCfg = Release|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Release|x64.Build.0 = Release|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Release|x86.ActiveCfg = Release|Any CPU
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,5 +128,6 @@ Global
 		{1063B286-778A-423F-8E4F-6591C3128996} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{3F5BF840-1977-40A4-B412-7BD6D6E42153} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{ECF9C2F9-5C72-44B5-8960-577B857752DE} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
+		{3650CFDB-5CCC-468F-92DF-DE443B0B9DD0} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal

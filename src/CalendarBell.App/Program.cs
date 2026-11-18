@@ -25,7 +25,7 @@ public static class Program
         {
             if (options.Quiet)
             {
-                SetupActions.UninstallAsync(paths, deleteUserData: false).GetAwaiter().GetResult();
+                SetupActions.UninstallAsync(paths, deleteUserData: false, removeInstallDirectory: !options.KeepFiles).GetAwaiter().GetResult();
                 return 0;
             }
 
@@ -97,7 +97,8 @@ public static class Program
             received.Set();
         };
         AppNotificationManager.Default.Register("CalendarBell", new Uri(Path.Combine(AppContext.BaseDirectory, "Resources", "Icons", "calendarbell.png")));
-        if (received.Wait(TimeSpan.FromSeconds(5)) && activation is not null)
+        activation ??= WindowsToastService.TryGetLaunchActivation();
+        if ((activation is not null || received.Wait(TimeSpan.FromSeconds(5))) && activation is not null)
         {
             instance.SendAsync(
                 new InstanceMessage("notification-action", activation.Argument, activation.UserInput.ToDictionary(kv => kv.Key, kv => kv.Value, StringComparer.Ordinal)),

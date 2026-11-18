@@ -57,6 +57,14 @@ public sealed class WindowsToastService : INotificationPresenter, IDisposable
             AppNotificationManager.Default.Register("CalendarBell", new Uri(iconPath));
             _registered = true;
             _logger.LogInformation("Notifications registered (setting: {Setting})", Setting);
+
+            // When Windows started this process because a toast was clicked, that first activation is delivered
+            // through the launch arguments (after Register), not through NotificationInvoked.
+            if (TryGetLaunchActivation() is { } launch)
+            {
+                _logger.LogInformation("Started by a notification click");
+                Activated?.Invoke(this, launch);
+            }
         }
         catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException or InvalidOperationException or ArgumentException)
         {
@@ -120,6 +128,26 @@ public sealed class WindowsToastService : INotificationPresenter, IDisposable
         {
             _logger.LogWarning("Reconciling active notifications failed: {Error}", LogSanitizer.Describe(ex));
         }
+    }
+
+    /// <summary>The notification activation that launched this process, if any. Call after Register.</summary>
+    public static ToastActivation? TryGetLaunchActivation()
+    {
+        try
+        {
+            var activated = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+            if (activated.Kind == Microsoft.Windows.AppLifecycle.ExtendedActivationKind.AppNotification &&
+                activated.Data is AppNotificationActivatedEventArgs args)
+            {
+                return new ToastActivation(args.Argument ?? string.Empty, args.UserInput.ToDictionary(kv => kv.Key, kv => kv.Value, StringComparer.Ordinal));
+            }
+        }
+        catch (Exception ex) when (ex is System.Runtime.InteropServices.COMException or InvalidOperationException or InvalidCastException)
+        {
+            // not available: treat as a normal launch
+        }
+
+        return null;
     }
 
     /// <summary>Uninstall only: removes the COM/AUMID registration so a stale toast cannot relaunch a removed app.</summary>

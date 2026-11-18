@@ -19,6 +19,9 @@ public sealed record StartupOptions
 
     public bool Quiet { get; init; }
 
+    /// <summary>Uninstall cleanup only (an external installer such as Inno Setup removes the program files itself).</summary>
+    public bool KeepFiles { get; init; }
+
     /// <summary>Skip the "Install CalendarBell" prompt when started outside the install folder (development, portable use).</summary>
     public bool NoInstallPrompt { get; init; }
 
@@ -44,6 +47,7 @@ public sealed record StartupOptions
                 "--install" => options with { Install = true },
                 "--uninstall" => options with { Uninstall = true },
                 "--quiet" => options with { Quiet = true },
+                "--keep-files" => options with { KeepFiles = true },
                 "--no-install-prompt" or "--portable" => options with { NoInstallPrompt = true },
                 _ => options,
             };
