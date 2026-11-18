@@ -12,6 +12,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About_Copied" xml:space="preserve">
+    <value>Diagnostics copied to the clipboard (no URLs included).</value>
+  </data>
+  <data name="About_CopyDiagnostics" xml:space="preserve">
+    <value>Copy diagnostics</value>
+  </data>
+  <data name="About_Description" xml:space="preserve">
+    <value>Native Windows reminders for ICS calendars. No account, no cloud, no telemetry.</value>
+  </data>
+  <data name="About_Diagnostics" xml:space="preserve">
+    <value>Diagnostics</value>
+  </data>
+  <data name="About_OpenLogs" xml:space="preserve">
+    <value>Open logs folder</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>About CalendarBell</value>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
   <data name="Action_Dismiss" xml:space="preserve">
     <value>Dismiss</value>
   </data>
@@ -23,6 +44,9 @@
   </data>
   <data name="Action_ViewReminders" xml:space="preserve">
     <value>View reminders</value>
+  </data>
+  <data name="App_Name" xml:space="preserve">
+    <value>CalendarBell</value>
   </data>
   <data name="Availability_Busy" xml:space="preserve">
     <value>Busy</value>
@@ -36,6 +60,258 @@
   <data name="Availability_Unknown" xml:space="preserve">
     <value>Meeting</value>
   </data>
+  <data name="Banner_DeliveryFailed" xml:space="preserve">
+    <value>The last reminder could not be shown. See About &amp; diagnostics.</value>
+  </data>
+  <data name="Banner_Elevated" xml:space="preserve">
+    <value>CalendarBell is running as administrator. Windows does not show notifications from elevated apps; start it normally.</value>
+  </data>
+  <data name="Banner_NotificationsOff" xml:space="preserve">
+    <value>Notifications for CalendarBell are turned off in Windows Settings.</value>
+  </data>
+  <data name="Banner_OpenNotificationSettings" xml:space="preserve">
+    <value>Open notification settings</value>
+  </data>
+  <data name="Banner_Paused" xml:space="preserve">
+    <value>Reminders are paused until {0}.</value>
+  </data>
+  <data name="Banner_PausedIndefinitely" xml:space="preserve">
+    <value>Reminders are paused until you resume them.</value>
+  </data>
+  <data name="Banner_Quiet" xml:space="preserve">
+    <value>Windows is in Do not disturb or presentation mode, so notifications may be held until it ends.</value>
+  </data>
+  <data name="Banner_ResetStorage" xml:space="preserve">
+    <value>Reset storage…</value>
+  </data>
+  <data name="Banner_Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="Banner_StorageError" xml:space="preserve">
+    <value>CalendarBell could not read its local data, so reminders are paused. A copy was kept for diagnosis.</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Diag_Calendars" xml:space="preserve">
+    <value>Calendars</value>
+  </data>
+  <data name="Diag_DataFolder" xml:space="preserve">
+    <value>Data folder</value>
+  </data>
+  <data name="Diag_Elevated" xml:space="preserve">
+    <value>Running elevated</value>
+  </data>
+  <data name="Diag_LastSuccess" xml:space="preserve">
+    <value>last success {0}</value>
+  </data>
+  <data name="Diag_LocalTime" xml:space="preserve">
+    <value>Local time</value>
+  </data>
+  <data name="Diag_Never" xml:space="preserve">
+    <value>never</value>
+  </data>
+  <data name="Diag_NextRefresh" xml:space="preserve">
+    <value>next refresh {0}</value>
+  </data>
+  <data name="Diag_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Diag_NotificationSetting" xml:space="preserve">
+    <value>Windows notification setting</value>
+  </data>
+  <data name="Diag_NotRegistered" xml:space="preserve">
+    <value>Not registered</value>
+  </data>
+  <data name="Diag_Pending" xml:space="preserve">
+    <value>Pending reminders</value>
+  </data>
+  <data name="Diag_Registered" xml:space="preserve">
+    <value>Registered</value>
+  </data>
+  <data name="Diag_Registration" xml:space="preserve">
+    <value>Notification registration</value>
+  </data>
+  <data name="Diag_Startup" xml:space="preserve">
+    <value>Start with Windows</value>
+  </data>
+  <data name="Diag_TimeZone" xml:space="preserve">
+    <value>Time zone</value>
+  </data>
+  <data name="Diag_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Editor_AddTitle" xml:space="preserve">
+    <value>Add calendar</value>
+  </data>
+  <data name="Editor_CancelTest" xml:space="preserve">
+    <value>Cancel test</value>
+  </data>
+  <data name="Editor_EditTitle" xml:space="preserve">
+    <value>Edit calendar</value>
+  </data>
+  <data name="Editor_Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Editor_HideUrl" xml:space="preserve">
+    <value>Hide URL</value>
+  </data>
+  <data name="Editor_Name" xml:space="preserve">
+    <value>Calendar name</value>
+  </data>
+  <data name="Editor_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Editor_SaveFailed" xml:space="preserve">
+    <value>Could not save: {0}</value>
+  </data>
+  <data name="Editor_ShowUrl" xml:space="preserve">
+    <value>Show URL</value>
+  </data>
+  <data name="Editor_Test" xml:space="preserve">
+    <value>Test connection</value>
+  </data>
+  <data name="Editor_TestCancelled" xml:space="preserve">
+    <value>Test cancelled.</value>
+  </data>
+  <data name="Editor_Testing" xml:space="preserve">
+    <value>Testing connection…</value>
+  </data>
+  <data name="Editor_Url" xml:space="preserve">
+    <value>Calendar URL</value>
+  </data>
+  <data name="Editor_UrlHint" xml:space="preserve">
+    <value>Paste the published ICS link (https://…). It is stored encrypted for your Windows account and never shown in logs.</value>
+  </data>
+  <data name="Editor_UrlUnchanged" xml:space="preserve">
+    <value>The saved URL is kept. Paste a new one to replace it.</value>
+  </data>
+  <data name="Install_AlreadyInstalled" xml:space="preserve">
+    <value>A previous version is installed and will be updated. Your settings and calendars are kept.</value>
+  </data>
+  <data name="Install_Failed" xml:space="preserve">
+    <value>Installation failed: {0}</value>
+  </data>
+  <data name="Install_Install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Install_Message" xml:space="preserve">
+    <value>CalendarBell will be installed for your Windows account only, without administrator rights, in:</value>
+  </data>
+  <data name="Install_RunOnce" xml:space="preserve">
+    <value>Run without installing</value>
+  </data>
+  <data name="Install_StartsAutomatically" xml:space="preserve">
+    <value>It starts automatically when you sign in and lives in the notification area.</value>
+  </data>
+  <data name="Install_Title" xml:space="preserve">
+    <value>Install CalendarBell</value>
+  </data>
+  <data name="Install_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Install_Working" xml:space="preserve">
+    <value>Installing…</value>
+  </data>
+  <data name="Name_Duplicate" xml:space="preserve">
+    <value>Another calendar already uses this name.</value>
+  </data>
+  <data name="Name_Invalid" xml:space="preserve">
+    <value>The name contains characters that are not allowed.</value>
+  </data>
+  <data name="Name_Required" xml:space="preserve">
+    <value>Enter a name.</value>
+  </data>
+  <data name="Name_TooLong" xml:space="preserve">
+    <value>Use at most 40 characters.</value>
+  </data>
+  <data name="Remove_Confirm" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Remove_Message" xml:space="preserve">
+    <value>Remove “{0}”? Its encrypted URL, cached events and reminders will be deleted. Other calendars are not affected.</value>
+  </data>
+  <data name="Remove_Title" xml:space="preserve">
+    <value>Remove calendar</value>
+  </data>
+  <data name="Reset_Confirm" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Reset_Message" xml:space="preserve">
+    <value>Move the damaged data file aside and start with a fresh one? Your calendars are restored from their encrypted backup; reminder history is lost.</value>
+  </data>
+  <data name="Reset_Title" xml:space="preserve">
+    <value>Reset storage</value>
+  </data>
+  <data name="Settings_AddCalendar" xml:space="preserve">
+    <value>Add calendar</value>
+  </data>
+  <data name="Settings_CalendarCount" xml:space="preserve">
+    <value>{0} of {1} enabled</value>
+  </data>
+  <data name="Settings_Calendars" xml:space="preserve">
+    <value>Calendars</value>
+  </data>
+  <data name="Settings_CheckNow" xml:space="preserve">
+    <value>Check now</value>
+  </data>
+  <data name="Settings_Diagnostics" xml:space="preserve">
+    <value>About &amp; diagnostics</value>
+  </data>
+  <data name="Settings_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Settings_EnabledToggle" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_InitialReminder" xml:space="preserve">
+    <value>Initial reminder: 15 min before</value>
+  </data>
+  <data name="Settings_NoCalendars" xml:space="preserve">
+    <value>No calendars yet. Add the published ICS link of a calendar to get a reminder 15 minutes before each meeting.</value>
+  </data>
+  <data name="Settings_OpenUpcoming" xml:space="preserve">
+    <value>Open upcoming</value>
+  </data>
+  <data name="Settings_PlaySound" xml:space="preserve">
+    <value>Play notification sound</value>
+  </data>
+  <data name="Settings_PrivacyHint" xml:space="preserve">
+    <value>When off, the meeting title can appear in reminders. Descriptions, attendees and links are never shown.</value>
+  </data>
+  <data name="Settings_PrivacyMode" xml:space="preserve">
+    <value>Privacy mode (availability only)</value>
+  </data>
+  <data name="Settings_Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Settings_SendTest" xml:space="preserve">
+    <value>Send test notification</value>
+  </data>
+  <data name="Settings_SnoozeTargets" xml:space="preserve">
+    <value>Snooze targets: 10 min before / 5 min before / at start</value>
+  </data>
+  <data name="Settings_StartWithWindows" xml:space="preserve">
+    <value>Start with Windows</value>
+  </data>
+  <data name="Settings_StatusAt" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="Settings_SyncedAt" xml:space="preserve">
+    <value>Synced · {0}</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>CalendarBell · Settings</value>
+  </data>
   <data name="Snooze_0" xml:space="preserve">
     <value>At start</value>
   </data>
@@ -44,6 +320,66 @@
   </data>
   <data name="Snooze_5" xml:space="preserve">
     <value>5 min before</value>
+  </data>
+  <data name="State_Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="State_InvalidCalendar" xml:space="preserve">
+    <value>Invalid calendar</value>
+  </data>
+  <data name="State_NetworkError" xml:space="preserve">
+    <value>Network error</value>
+  </data>
+  <data name="State_NeverSynced" xml:space="preserve">
+    <value>Never synced</value>
+  </data>
+  <data name="State_NotificationsOff" xml:space="preserve">
+    <value>Notifications off</value>
+  </data>
+  <data name="State_Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="State_Refreshing" xml:space="preserve">
+    <value>Refreshing</value>
+  </data>
+  <data name="State_Stale" xml:space="preserve">
+    <value>Data out of date</value>
+  </data>
+  <data name="State_StorageError" xml:space="preserve">
+    <value>Storage error</value>
+  </data>
+  <data name="State_Synced" xml:space="preserve">
+    <value>Synced</value>
+  </data>
+  <data name="State_SyncWarning" xml:space="preserve">
+    <value>Sync warning</value>
+  </data>
+  <data name="Status_Calendars" xml:space="preserve">
+    <value>{0} calendars · {1}</value>
+  </data>
+  <data name="Status_Cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="Status_Dismissed" xml:space="preserve">
+    <value>Dismissed</value>
+  </data>
+  <data name="Status_Expired" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="Status_NoCalendars" xml:space="preserve">
+    <value>No calendars</value>
+  </data>
+  <data name="Status_Notified" xml:space="preserve">
+    <value>Notified</value>
+  </data>
+  <data name="Status_OneCalendar" xml:space="preserve">
+    <value>1 calendar · {0}</value>
+  </data>
+  <data name="Status_Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Status_Snoozed" xml:space="preserve">
+    <value>Snoozed to {0}</value>
   </data>
   <data name="Sync_AccessDenied" xml:space="preserve">
     <value>Access denied (HTTP {0}). The link may have expired.</value>
@@ -84,6 +420,12 @@
   <data name="Test_Connected" xml:space="preserve">
     <value>Connected · {0} upcoming events</value>
   </data>
+  <data name="Test_Failed" xml:space="preserve">
+    <value>The test notification could not be shown: {0}</value>
+  </data>
+  <data name="Test_Sent" xml:space="preserve">
+    <value>Test notification sent.</value>
+  </data>
   <data name="Toast_GroupIn" xml:space="preserve">
     <value>{0} meetings in {1} min</value>
   </data>
@@ -110,6 +452,93 @@
   </data>
   <data name="Toast_TimeRange" xml:space="preserve">
     <value>{0} · {1}–{2}</value>
+  </data>
+  <data name="Tooltip_Format" xml:space="preserve">
+    <value>CalendarBell · {0}</value>
+  </data>
+  <data name="Tray_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Tray_CheckNow" xml:space="preserve">
+    <value>Check now</value>
+  </data>
+  <data name="Tray_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Tray_Pause" xml:space="preserve">
+    <value>Pause reminders</value>
+  </data>
+  <data name="Tray_Pause30" xml:space="preserve">
+    <value>30 minutes</value>
+  </data>
+  <data name="Tray_Pause60" xml:space="preserve">
+    <value>1 hour</value>
+  </data>
+  <data name="Tray_PauseUntilResumed" xml:space="preserve">
+    <value>Until resumed</value>
+  </data>
+  <data name="Tray_Resume" xml:space="preserve">
+    <value>Resume reminders</value>
+  </data>
+  <data name="Tray_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Tray_StartWithWindows" xml:space="preserve">
+    <value>Start with Windows</value>
+  </data>
+  <data name="Tray_Status" xml:space="preserve">
+    <value>Status: {0}</value>
+  </data>
+  <data name="Tray_Upcoming" xml:space="preserve">
+    <value>Upcoming reminders</value>
+  </data>
+  <data name="Uninstall_DeleteData" xml:space="preserve">
+    <value>Also delete my settings, encrypted calendar URLs and logs</value>
+  </data>
+  <data name="Uninstall_Done" xml:space="preserve">
+    <value>CalendarBell was uninstalled.</value>
+  </data>
+  <data name="Uninstall_Message" xml:space="preserve">
+    <value>CalendarBell, its Start menu shortcut and its sign-in startup entry will be removed from this account.</value>
+  </data>
+  <data name="Uninstall_Title" xml:space="preserve">
+    <value>Uninstall CalendarBell</value>
+  </data>
+  <data name="Uninstall_Uninstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="Upcoming_ActionFailed" xml:space="preserve">
+    <value>That change could not be saved.</value>
+  </data>
+  <data name="Upcoming_AllCalendars" xml:space="preserve">
+    <value>All calendars</value>
+  </data>
+  <data name="Upcoming_AllStatuses" xml:space="preserve">
+    <value>All statuses</value>
+  </data>
+  <data name="Upcoming_Empty" xml:space="preserve">
+    <value>No meetings in the next 24 hours.</value>
+  </data>
+  <data name="Upcoming_FromNotification" xml:space="preserve">
+    <value>From notification</value>
+  </data>
+  <data name="Upcoming_ShowAll" xml:space="preserve">
+    <value>Show all</value>
+  </data>
+  <data name="Upcoming_ShowDismissed" xml:space="preserve">
+    <value>Show dismissed</value>
+  </data>
+  <data name="Upcoming_SnoozeTo" xml:space="preserve">
+    <value>Snooze to</value>
+  </data>
+  <data name="Upcoming_Title" xml:space="preserve">
+    <value>Upcoming reminders</value>
+  </data>
+  <data name="Upcoming_Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="Upcoming_Tomorrow" xml:space="preserve">
+    <value>Tomorrow</value>
   </data>
   <data name="Url_HttpsRequired" xml:space="preserve">
     <value>The URL must start with https://</value>

@@ -27,6 +27,7 @@
     <!-- WPF Fluent ThemeMode is marked experimental in .NET 10 -->
     <!-- WFO0003: DPI awareness is declared in app.manifest on purpose (WPF owns the UI; WinForms is only used for NotifyIcon). -->
     <NoWarn>$(NoWarn);WPF0001;WFO0003</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Using Remove="System.Windows.Forms" />

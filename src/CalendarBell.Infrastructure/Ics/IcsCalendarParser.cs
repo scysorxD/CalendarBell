@@ -35,6 +35,11 @@ public sealed class IcsCalendarParser : ICalendarParser
         _floatingZone = floatingZone;
         _maxInstances = maxInstances;
         _maxDuration = maxDuration ?? TimeSpan.FromSeconds(10);
+        if (logger is not null)
+        {
+            IcsTimeZones.Warning ??= message => _logger.LogWarning("{Message}", message);
+        }
+
         IcsTimeZones.Install();
     }
 

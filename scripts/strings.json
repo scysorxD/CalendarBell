@@ -1,39 +1,407 @@
 {
-  "Toast_SingleIn": {
-    "en": "{0} · Meeting in {1} min",
-    "es-AR": "{0} · Reunión en {1} min"
+  "About_Copied": {
+    "en": "Diagnostics copied to the clipboard (no URLs included).",
+    "es-AR": "Diagnóstico copiado al portapapeles (sin URLs)."
   },
-  "Toast_SingleNow": {
-    "en": "{0} · Meeting starting now",
-    "es-AR": "{0} · La reunión empieza ahora"
+  "About_CopyDiagnostics": {
+    "en": "Copy diagnostics",
+    "es-AR": "Copiar diagnóstico"
   },
-  "Toast_GroupIn": {
-    "en": "{0} meetings in {1} min",
-    "es-AR": "{0} reuniones en {1} min"
+  "About_Description": {
+    "en": "Native Windows reminders for ICS calendars. No account, no cloud, no telemetry.",
+    "es-AR": "Recordatorios nativos de Windows para calendarios ICS. Sin cuenta, sin nube, sin telemetría."
   },
-  "Toast_GroupNow": {
-    "en": "{0} meetings starting now",
-    "es-AR": "{0} reuniones empiezan ahora"
+  "About_Diagnostics": {
+    "en": "Diagnostics",
+    "es-AR": "Diagnóstico"
   },
-  "Toast_Summary": {
-    "en": "{0} reminders need attention",
-    "es-AR": "{0} recordatorios requieren atención"
+  "About_OpenLogs": {
+    "en": "Open logs folder",
+    "es-AR": "Abrir carpeta de registros"
   },
-  "Toast_TimeRange": {
-    "en": "{0} · {1}–{2}",
-    "es-AR": "{0} · {1}–{2}"
+  "About_Title": {
+    "en": "About CalendarBell",
+    "es-AR": "Acerca de CalendarBell"
   },
-  "Toast_MemberLine": {
-    "en": "{0} · {1} · {2}",
-    "es-AR": "{0} · {1} · {2}"
+  "About_Version": {
+    "en": "Version {0}",
+    "es-AR": "Versión {0}"
   },
-  "Toast_More": {
-    "en": "+{0} more",
-    "es-AR": "+{0} más"
+  "Action_Dismiss": {
+    "en": "Dismiss",
+    "es-AR": "Descartar"
   },
-  "Toast_TestCalendar": {
-    "en": "Test notification",
-    "es-AR": "Notificación de prueba"
+  "Action_DismissAll": {
+    "en": "Dismiss all",
+    "es-AR": "Descartar todos"
+  },
+  "Action_Snooze": {
+    "en": "Snooze",
+    "es-AR": "Posponer"
+  },
+  "Action_ViewReminders": {
+    "en": "View reminders",
+    "es-AR": "Ver recordatorios"
+  },
+  "App_Name": {
+    "en": "CalendarBell",
+    "es-AR": "CalendarBell"
+  },
+  "Availability_Busy": {
+    "en": "Busy",
+    "es-AR": "Ocupado"
+  },
+  "Availability_OutOfOffice": {
+    "en": "Out of office",
+    "es-AR": "Fuera de la oficina"
+  },
+  "Availability_Tentative": {
+    "en": "Tentative",
+    "es-AR": "Provisional"
+  },
+  "Availability_Unknown": {
+    "en": "Meeting",
+    "es-AR": "Reunión"
+  },
+  "Banner_DeliveryFailed": {
+    "en": "The last reminder could not be shown. See About & diagnostics.",
+    "es-AR": "No se pudo mostrar el último recordatorio. Ver Acerca de y diagnóstico."
+  },
+  "Banner_Elevated": {
+    "en": "CalendarBell is running as administrator. Windows does not show notifications from elevated apps; start it normally.",
+    "es-AR": "CalendarBell se está ejecutando como administrador. Windows no muestra notificaciones de apps elevadas; inicialo normalmente."
+  },
+  "Banner_NotificationsOff": {
+    "en": "Notifications for CalendarBell are turned off in Windows Settings.",
+    "es-AR": "Las notificaciones de CalendarBell están desactivadas en la Configuración de Windows."
+  },
+  "Banner_OpenNotificationSettings": {
+    "en": "Open notification settings",
+    "es-AR": "Abrir configuración de notificaciones"
+  },
+  "Banner_Paused": {
+    "en": "Reminders are paused until {0}.",
+    "es-AR": "Los recordatorios están en pausa hasta las {0}."
+  },
+  "Banner_PausedIndefinitely": {
+    "en": "Reminders are paused until you resume them.",
+    "es-AR": "Los recordatorios están en pausa hasta que los reanudes."
+  },
+  "Banner_Quiet": {
+    "en": "Windows is in Do not disturb or presentation mode, so notifications may be held until it ends.",
+    "es-AR": "Windows está en No molestar o en modo presentación; las notificaciones pueden retenerse hasta que termine."
+  },
+  "Banner_ResetStorage": {
+    "en": "Reset storage…",
+    "es-AR": "Restablecer almacenamiento…"
+  },
+  "Banner_Resume": {
+    "en": "Resume",
+    "es-AR": "Reanudar"
+  },
+  "Banner_StorageError": {
+    "en": "CalendarBell could not read its local data, so reminders are paused. A copy was kept for diagnosis.",
+    "es-AR": "CalendarBell no pudo leer sus datos locales, por eso los recordatorios están en pausa. Se guardó una copia para diagnóstico."
+  },
+  "Common_Cancel": {
+    "en": "Cancel",
+    "es-AR": "Cancelar"
+  },
+  "Common_Close": {
+    "en": "Close",
+    "es-AR": "Cerrar"
+  },
+  "Common_OK": {
+    "en": "OK",
+    "es-AR": "Aceptar"
+  },
+  "Diag_Calendars": {
+    "en": "Calendars",
+    "es-AR": "Calendarios"
+  },
+  "Diag_DataFolder": {
+    "en": "Data folder",
+    "es-AR": "Carpeta de datos"
+  },
+  "Diag_Elevated": {
+    "en": "Running elevated",
+    "es-AR": "Ejecución elevada"
+  },
+  "Diag_LastSuccess": {
+    "en": "last success {0}",
+    "es-AR": "último éxito {0}"
+  },
+  "Diag_LocalTime": {
+    "en": "Local time",
+    "es-AR": "Hora local"
+  },
+  "Diag_Never": {
+    "en": "never",
+    "es-AR": "nunca"
+  },
+  "Diag_NextRefresh": {
+    "en": "next refresh {0}",
+    "es-AR": "próxima actualización {0}"
+  },
+  "Diag_No": {
+    "en": "No",
+    "es-AR": "No"
+  },
+  "Diag_NotificationSetting": {
+    "en": "Windows notification setting",
+    "es-AR": "Configuración de notificaciones de Windows"
+  },
+  "Diag_NotRegistered": {
+    "en": "Not registered",
+    "es-AR": "No registrado"
+  },
+  "Diag_Pending": {
+    "en": "Pending reminders",
+    "es-AR": "Recordatorios pendientes"
+  },
+  "Diag_Registered": {
+    "en": "Registered",
+    "es-AR": "Registrado"
+  },
+  "Diag_Registration": {
+    "en": "Notification registration",
+    "es-AR": "Registro de notificaciones"
+  },
+  "Diag_Startup": {
+    "en": "Start with Windows",
+    "es-AR": "Inicio con Windows"
+  },
+  "Diag_TimeZone": {
+    "en": "Time zone",
+    "es-AR": "Zona horaria"
+  },
+  "Diag_Yes": {
+    "en": "Yes",
+    "es-AR": "Sí"
+  },
+  "Editor_AddTitle": {
+    "en": "Add calendar",
+    "es-AR": "Agregar calendario"
+  },
+  "Editor_CancelTest": {
+    "en": "Cancel test",
+    "es-AR": "Cancelar prueba"
+  },
+  "Editor_EditTitle": {
+    "en": "Edit calendar",
+    "es-AR": "Editar calendario"
+  },
+  "Editor_Enabled": {
+    "en": "Enabled",
+    "es-AR": "Habilitado"
+  },
+  "Editor_HideUrl": {
+    "en": "Hide URL",
+    "es-AR": "Ocultar URL"
+  },
+  "Editor_Name": {
+    "en": "Calendar name",
+    "es-AR": "Nombre del calendario"
+  },
+  "Editor_Save": {
+    "en": "Save",
+    "es-AR": "Guardar"
+  },
+  "Editor_SaveFailed": {
+    "en": "Could not save: {0}",
+    "es-AR": "No se pudo guardar: {0}"
+  },
+  "Editor_ShowUrl": {
+    "en": "Show URL",
+    "es-AR": "Mostrar URL"
+  },
+  "Editor_Test": {
+    "en": "Test connection",
+    "es-AR": "Probar conexión"
+  },
+  "Editor_TestCancelled": {
+    "en": "Test cancelled.",
+    "es-AR": "Prueba cancelada."
+  },
+  "Editor_Testing": {
+    "en": "Testing connection…",
+    "es-AR": "Probando conexión…"
+  },
+  "Editor_Url": {
+    "en": "Calendar URL",
+    "es-AR": "URL del calendario"
+  },
+  "Editor_UrlHint": {
+    "en": "Paste the published ICS link (https://…). It is stored encrypted for your Windows account and never shown in logs.",
+    "es-AR": "Pegá el enlace ICS publicado (https://…). Se guarda cifrado para tu cuenta de Windows y nunca aparece en los registros."
+  },
+  "Editor_UrlUnchanged": {
+    "en": "The saved URL is kept. Paste a new one to replace it.",
+    "es-AR": "Se conserva la URL guardada. Pegá una nueva para reemplazarla."
+  },
+  "Install_AlreadyInstalled": {
+    "en": "A previous version is installed and will be updated. Your settings and calendars are kept.",
+    "es-AR": "Hay una versión anterior instalada que se actualizará. Se conservan tu configuración y tus calendarios."
+  },
+  "Install_Failed": {
+    "en": "Installation failed: {0}",
+    "es-AR": "La instalación falló: {0}"
+  },
+  "Install_Install": {
+    "en": "Install",
+    "es-AR": "Instalar"
+  },
+  "Install_Message": {
+    "en": "CalendarBell will be installed for your Windows account only, without administrator rights, in:",
+    "es-AR": "CalendarBell se instalará solo para tu cuenta de Windows, sin permisos de administrador, en:"
+  },
+  "Install_RunOnce": {
+    "en": "Run without installing",
+    "es-AR": "Ejecutar sin instalar"
+  },
+  "Install_StartsAutomatically": {
+    "en": "It starts automatically when you sign in and lives in the notification area.",
+    "es-AR": "Se inicia automáticamente al iniciar sesión y queda en el área de notificación."
+  },
+  "Install_Title": {
+    "en": "Install CalendarBell",
+    "es-AR": "Instalar CalendarBell"
+  },
+  "Install_Update": {
+    "en": "Update",
+    "es-AR": "Actualizar"
+  },
+  "Install_Working": {
+    "en": "Installing…",
+    "es-AR": "Instalando…"
+  },
+  "Name_Duplicate": {
+    "en": "Another calendar already uses this name.",
+    "es-AR": "Otro calendario ya usa este nombre."
+  },
+  "Name_Invalid": {
+    "en": "The name contains characters that are not allowed.",
+    "es-AR": "El nombre contiene caracteres no permitidos."
+  },
+  "Name_Required": {
+    "en": "Enter a name.",
+    "es-AR": "Ingresá un nombre."
+  },
+  "Name_TooLong": {
+    "en": "Use at most 40 characters.",
+    "es-AR": "Usá como máximo 40 caracteres."
+  },
+  "Remove_Confirm": {
+    "en": "Remove",
+    "es-AR": "Quitar"
+  },
+  "Remove_Message": {
+    "en": "Remove “{0}”? Its encrypted URL, cached events and reminders will be deleted. Other calendars are not affected.",
+    "es-AR": "¿Quitar “{0}”? Se eliminarán su URL cifrada, los eventos en caché y los recordatorios. Los demás calendarios no se modifican."
+  },
+  "Remove_Title": {
+    "en": "Remove calendar",
+    "es-AR": "Quitar calendario"
+  },
+  "Reset_Confirm": {
+    "en": "Reset",
+    "es-AR": "Restablecer"
+  },
+  "Reset_Message": {
+    "en": "Move the damaged data file aside and start with a fresh one? Your calendars are restored from their encrypted backup; reminder history is lost.",
+    "es-AR": "¿Apartar el archivo dañado y empezar con uno nuevo? Tus calendarios se restauran desde su copia cifrada; se pierde el historial de recordatorios."
+  },
+  "Reset_Title": {
+    "en": "Reset storage",
+    "es-AR": "Restablecer almacenamiento"
+  },
+  "Settings_AddCalendar": {
+    "en": "Add calendar",
+    "es-AR": "Agregar calendario"
+  },
+  "Settings_CalendarCount": {
+    "en": "{0} of {1} enabled",
+    "es-AR": "{0} de {1} habilitados"
+  },
+  "Settings_Calendars": {
+    "en": "Calendars",
+    "es-AR": "Calendarios"
+  },
+  "Settings_CheckNow": {
+    "en": "Check now",
+    "es-AR": "Comprobar ahora"
+  },
+  "Settings_Diagnostics": {
+    "en": "About & diagnostics",
+    "es-AR": "Acerca de y diagnóstico"
+  },
+  "Settings_Edit": {
+    "en": "Edit",
+    "es-AR": "Editar"
+  },
+  "Settings_EnabledToggle": {
+    "en": "Enabled",
+    "es-AR": "Habilitado"
+  },
+  "Settings_General": {
+    "en": "General",
+    "es-AR": "General"
+  },
+  "Settings_InitialReminder": {
+    "en": "Initial reminder: 15 min before",
+    "es-AR": "Aviso inicial: 15 min antes"
+  },
+  "Settings_NoCalendars": {
+    "en": "No calendars yet. Add the published ICS link of a calendar to get a reminder 15 minutes before each meeting.",
+    "es-AR": "Todavía no hay calendarios. Agregá el enlace ICS publicado de un calendario para recibir un aviso 15 minutos antes de cada reunión."
+  },
+  "Settings_OpenUpcoming": {
+    "en": "Open upcoming",
+    "es-AR": "Ver próximos"
+  },
+  "Settings_PlaySound": {
+    "en": "Play notification sound",
+    "es-AR": "Reproducir sonido de notificación"
+  },
+  "Settings_PrivacyHint": {
+    "en": "When off, the meeting title can appear in reminders. Descriptions, attendees and links are never shown.",
+    "es-AR": "Si está desactivado, el título de la reunión puede aparecer en los avisos. Nunca se muestran descripciones, asistentes ni enlaces."
+  },
+  "Settings_PrivacyMode": {
+    "en": "Privacy mode (availability only)",
+    "es-AR": "Modo privado (solo disponibilidad)"
+  },
+  "Settings_Remove": {
+    "en": "Remove",
+    "es-AR": "Quitar"
+  },
+  "Settings_SendTest": {
+    "en": "Send test notification",
+    "es-AR": "Enviar notificación de prueba"
+  },
+  "Settings_SnoozeTargets": {
+    "en": "Snooze targets: 10 min before / 5 min before / at start",
+    "es-AR": "Posponer a: 10 min antes / 5 min antes / al comenzar"
+  },
+  "Settings_StartWithWindows": {
+    "en": "Start with Windows",
+    "es-AR": "Iniciar con Windows"
+  },
+  "Settings_StatusAt": {
+    "en": "{0} · {1}",
+    "es-AR": "{0} · {1}"
+  },
+  "Settings_SyncedAt": {
+    "en": "Synced · {0}",
+    "es-AR": "Sincronizado · {0}"
+  },
+  "Settings_Title": {
+    "en": "CalendarBell · Settings",
+    "es-AR": "CalendarBell · Configuración"
+  },
+  "Snooze_0": {
+    "en": "At start",
+    "es-AR": "Al comenzar"
   },
   "Snooze_10": {
     "en": "10 min before",
@@ -43,41 +411,309 @@
     "en": "5 min before",
     "es-AR": "5 min antes"
   },
-  "Snooze_0": {
-    "en": "At start",
-    "es-AR": "Al comenzar"
+  "State_Disabled": {
+    "en": "Disabled",
+    "es-AR": "Deshabilitado"
   },
-  "Action_Snooze": {
-    "en": "Snooze",
-    "es-AR": "Posponer"
+  "State_InvalidCalendar": {
+    "en": "Invalid calendar",
+    "es-AR": "Calendario inválido"
   },
-  "Action_Dismiss": {
-    "en": "Dismiss",
-    "es-AR": "Descartar"
+  "State_NetworkError": {
+    "en": "Network error",
+    "es-AR": "Error de red"
   },
-  "Action_ViewReminders": {
-    "en": "View reminders",
-    "es-AR": "Ver recordatorios"
+  "State_NeverSynced": {
+    "en": "Never synced",
+    "es-AR": "Nunca sincronizado"
   },
-  "Action_DismissAll": {
-    "en": "Dismiss all",
-    "es-AR": "Descartar todos"
+  "State_NotificationsOff": {
+    "en": "Notifications off",
+    "es-AR": "Notificaciones desactivadas"
   },
-  "Availability_Busy": {
-    "en": "Busy",
-    "es-AR": "Ocupado"
+  "State_Paused": {
+    "en": "Paused",
+    "es-AR": "En pausa"
   },
-  "Availability_Tentative": {
-    "en": "Tentative",
-    "es-AR": "Provisional"
+  "State_Refreshing": {
+    "en": "Refreshing",
+    "es-AR": "Actualizando"
   },
-  "Availability_OutOfOffice": {
-    "en": "Out of office",
-    "es-AR": "Fuera de la oficina"
+  "State_Stale": {
+    "en": "Data out of date",
+    "es-AR": "Datos desactualizados"
   },
-  "Availability_Unknown": {
-    "en": "Meeting",
-    "es-AR": "Reunión"
+  "State_StorageError": {
+    "en": "Storage error",
+    "es-AR": "Error de almacenamiento"
+  },
+  "State_Synced": {
+    "en": "Synced",
+    "es-AR": "Sincronizado"
+  },
+  "State_SyncWarning": {
+    "en": "Sync warning",
+    "es-AR": "Advertencia de sincronización"
+  },
+  "Status_Calendars": {
+    "en": "{0} calendars · {1}",
+    "es-AR": "{0} calendarios · {1}"
+  },
+  "Status_Cancelled": {
+    "en": "Cancelled",
+    "es-AR": "Cancelado"
+  },
+  "Status_Dismissed": {
+    "en": "Dismissed",
+    "es-AR": "Descartado"
+  },
+  "Status_Expired": {
+    "en": "Expired",
+    "es-AR": "Vencido"
+  },
+  "Status_NoCalendars": {
+    "en": "No calendars",
+    "es-AR": "Sin calendarios"
+  },
+  "Status_Notified": {
+    "en": "Notified",
+    "es-AR": "Notificado"
+  },
+  "Status_OneCalendar": {
+    "en": "1 calendar · {0}",
+    "es-AR": "1 calendario · {0}"
+  },
+  "Status_Pending": {
+    "en": "Pending",
+    "es-AR": "Pendiente"
+  },
+  "Status_Snoozed": {
+    "en": "Snoozed to {0}",
+    "es-AR": "Pospuesto a las {0}"
+  },
+  "Sync_AccessDenied": {
+    "en": "Access denied (HTTP {0}). The link may have expired.",
+    "es-AR": "Acceso denegado (HTTP {0}). El enlace puede haber vencido."
+  },
+  "Sync_InsecureRedirect": {
+    "en": "The server redirected to an insecure address.",
+    "es-AR": "El servidor redirigió a una dirección insegura."
+  },
+  "Sync_InvalidIcs": {
+    "en": "The response is not a valid iCalendar feed.",
+    "es-AR": "La respuesta no es un calendario iCalendar válido."
+  },
+  "Sync_InvalidUrl": {
+    "en": "The calendar URL is not valid.",
+    "es-AR": "La URL del calendario no es válida."
+  },
+  "Sync_Network": {
+    "en": "Network error: {0}",
+    "es-AR": "Error de red: {0}"
+  },
+  "Sync_NotFound": {
+    "en": "Calendar not found (HTTP 404).",
+    "es-AR": "No se encontró el calendario (HTTP 404)."
+  },
+  "Sync_RateLimited": {
+    "en": "Too many requests. Retrying later.",
+    "es-AR": "Demasiadas solicitudes. Se reintentará más tarde."
+  },
+  "Sync_ServerError": {
+    "en": "The server returned an error (HTTP {0}).",
+    "es-AR": "El servidor devolvió un error (HTTP {0})."
+  },
+  "Sync_Timeout": {
+    "en": "The server did not respond in time.",
+    "es-AR": "El servidor no respondió a tiempo."
+  },
+  "Sync_TooLarge": {
+    "en": "The calendar is too large (over {0} MB).",
+    "es-AR": "El calendario es demasiado grande (más de {0} MB)."
+  },
+  "Sync_TooManyRedirects": {
+    "en": "Too many redirects.",
+    "es-AR": "Demasiadas redirecciones."
+  },
+  "Sync_UrlUnreadable": {
+    "en": "The saved URL could not be decrypted. Edit the calendar and paste the URL again.",
+    "es-AR": "No se pudo descifrar la URL guardada. Editá el calendario y pegá la URL nuevamente."
+  },
+  "Test_Connected": {
+    "en": "Connected · {0} upcoming events",
+    "es-AR": "Conectado · {0} eventos próximos"
+  },
+  "Test_Failed": {
+    "en": "The test notification could not be shown: {0}",
+    "es-AR": "No se pudo mostrar la notificación de prueba: {0}"
+  },
+  "Test_Sent": {
+    "en": "Test notification sent.",
+    "es-AR": "Notificación de prueba enviada."
+  },
+  "Toast_GroupIn": {
+    "en": "{0} meetings in {1} min",
+    "es-AR": "{0} reuniones en {1} min"
+  },
+  "Toast_GroupNow": {
+    "en": "{0} meetings starting now",
+    "es-AR": "{0} reuniones empiezan ahora"
+  },
+  "Toast_MemberLine": {
+    "en": "{0} · {1} · {2}",
+    "es-AR": "{0} · {1} · {2}"
+  },
+  "Toast_More": {
+    "en": "+{0} more",
+    "es-AR": "+{0} más"
+  },
+  "Toast_SingleIn": {
+    "en": "{0} · Meeting in {1} min",
+    "es-AR": "{0} · Reunión en {1} min"
+  },
+  "Toast_SingleNow": {
+    "en": "{0} · Meeting starting now",
+    "es-AR": "{0} · La reunión empieza ahora"
+  },
+  "Toast_Summary": {
+    "en": "{0} reminders need attention",
+    "es-AR": "{0} recordatorios requieren atención"
+  },
+  "Toast_TestCalendar": {
+    "en": "Test notification",
+    "es-AR": "Notificación de prueba"
+  },
+  "Toast_TimeRange": {
+    "en": "{0} · {1}–{2}",
+    "es-AR": "{0} · {1}–{2}"
+  },
+  "Tooltip_Format": {
+    "en": "CalendarBell · {0}",
+    "es-AR": "CalendarBell · {0}"
+  },
+  "Tray_About": {
+    "en": "About",
+    "es-AR": "Acerca de"
+  },
+  "Tray_CheckNow": {
+    "en": "Check now",
+    "es-AR": "Comprobar ahora"
+  },
+  "Tray_Exit": {
+    "en": "Exit",
+    "es-AR": "Salir"
+  },
+  "Tray_Pause": {
+    "en": "Pause reminders",
+    "es-AR": "Pausar recordatorios"
+  },
+  "Tray_Pause30": {
+    "en": "30 minutes",
+    "es-AR": "30 minutos"
+  },
+  "Tray_Pause60": {
+    "en": "1 hour",
+    "es-AR": "1 hora"
+  },
+  "Tray_PauseUntilResumed": {
+    "en": "Until resumed",
+    "es-AR": "Hasta reanudar"
+  },
+  "Tray_Resume": {
+    "en": "Resume reminders",
+    "es-AR": "Reanudar recordatorios"
+  },
+  "Tray_Settings": {
+    "en": "Settings",
+    "es-AR": "Configuración"
+  },
+  "Tray_StartWithWindows": {
+    "en": "Start with Windows",
+    "es-AR": "Iniciar con Windows"
+  },
+  "Tray_Status": {
+    "en": "Status: {0}",
+    "es-AR": "Estado: {0}"
+  },
+  "Tray_Upcoming": {
+    "en": "Upcoming reminders",
+    "es-AR": "Próximos recordatorios"
+  },
+  "Uninstall_DeleteData": {
+    "en": "Also delete my settings, encrypted calendar URLs and logs",
+    "es-AR": "Eliminar también mi configuración, las URLs cifradas de los calendarios y los registros"
+  },
+  "Uninstall_Done": {
+    "en": "CalendarBell was uninstalled.",
+    "es-AR": "CalendarBell se desinstaló."
+  },
+  "Uninstall_Message": {
+    "en": "CalendarBell, its Start menu shortcut and its sign-in startup entry will be removed from this account.",
+    "es-AR": "Se quitarán de esta cuenta CalendarBell, su acceso directo del menú Inicio y su inicio automático."
+  },
+  "Uninstall_Title": {
+    "en": "Uninstall CalendarBell",
+    "es-AR": "Desinstalar CalendarBell"
+  },
+  "Uninstall_Uninstall": {
+    "en": "Uninstall",
+    "es-AR": "Desinstalar"
+  },
+  "Upcoming_ActionFailed": {
+    "en": "That change could not be saved.",
+    "es-AR": "No se pudo guardar el cambio."
+  },
+  "Upcoming_AllCalendars": {
+    "en": "All calendars",
+    "es-AR": "Todos los calendarios"
+  },
+  "Upcoming_AllStatuses": {
+    "en": "All statuses",
+    "es-AR": "Todos los estados"
+  },
+  "Upcoming_Empty": {
+    "en": "No meetings in the next 24 hours.",
+    "es-AR": "No hay reuniones en las próximas 24 horas."
+  },
+  "Upcoming_FromNotification": {
+    "en": "From notification",
+    "es-AR": "Desde la notificación"
+  },
+  "Upcoming_ShowAll": {
+    "en": "Show all",
+    "es-AR": "Mostrar todo"
+  },
+  "Upcoming_ShowDismissed": {
+    "en": "Show dismissed",
+    "es-AR": "Mostrar descartados"
+  },
+  "Upcoming_SnoozeTo": {
+    "en": "Snooze to",
+    "es-AR": "Posponer a"
+  },
+  "Upcoming_Title": {
+    "en": "Upcoming reminders",
+    "es-AR": "Próximos recordatorios"
+  },
+  "Upcoming_Today": {
+    "en": "Today",
+    "es-AR": "Hoy"
+  },
+  "Upcoming_Tomorrow": {
+    "en": "Tomorrow",
+    "es-AR": "Mañana"
+  },
+  "Url_HttpsRequired": {
+    "en": "The URL must start with https://",
+    "es-AR": "La URL debe comenzar con https://"
+  },
+  "Url_Invalid": {
+    "en": "This is not a valid URL.",
+    "es-AR": "No es una URL válida."
+  },
+  "Url_NoCredentials": {
+    "en": "URLs with a user name or password are not supported.",
+    "es-AR": "No se admiten URLs con usuario o contraseña."
   },
   "Url_Required": {
     "en": "Enter the calendar URL.",
@@ -86,69 +722,5 @@
   "Url_TooLong": {
     "en": "The URL is too long (maximum 4096 characters).",
     "es-AR": "La URL es demasiado larga (máximo 4096 caracteres)."
-  },
-  "Url_Invalid": {
-    "en": "This is not a valid URL.",
-    "es-AR": "No es una URL válida."
-  },
-  "Url_HttpsRequired": {
-    "en": "The URL must start with https://",
-    "es-AR": "La URL debe comenzar con https://"
-  },
-  "Url_NoCredentials": {
-    "en": "URLs with a user name or password are not supported.",
-    "es-AR": "No se admiten URLs con usuario o contraseña."
-  },
-  "Sync_AccessDenied": {
-    "en": "Access denied (HTTP {0}). The link may have expired.",
-    "es-AR": "Acceso denegado (HTTP {0}). El enlace puede haber vencido."
-  },
-  "Sync_NotFound": {
-    "en": "Calendar not found (HTTP 404).",
-    "es-AR": "No se encontró el calendario (HTTP 404)."
-  },
-  "Sync_ServerError": {
-    "en": "The server returned an error (HTTP {0}).",
-    "es-AR": "El servidor devolvió un error (HTTP {0})."
-  },
-  "Sync_RateLimited": {
-    "en": "Too many requests. Retrying later.",
-    "es-AR": "Demasiadas solicitudes. Se reintentará más tarde."
-  },
-  "Sync_Timeout": {
-    "en": "The server did not respond in time.",
-    "es-AR": "El servidor no respondió a tiempo."
-  },
-  "Sync_Network": {
-    "en": "Network error: {0}",
-    "es-AR": "Error de red: {0}"
-  },
-  "Sync_TooLarge": {
-    "en": "The calendar is too large (over {0} MB).",
-    "es-AR": "El calendario es demasiado grande (más de {0} MB)."
-  },
-  "Sync_InsecureRedirect": {
-    "en": "The server redirected to an insecure address.",
-    "es-AR": "El servidor redirigió a una dirección insegura."
-  },
-  "Sync_TooManyRedirects": {
-    "en": "Too many redirects.",
-    "es-AR": "Demasiadas redirecciones."
-  },
-  "Sync_InvalidUrl": {
-    "en": "The calendar URL is not valid.",
-    "es-AR": "La URL del calendario no es válida."
-  },
-  "Sync_UrlUnreadable": {
-    "en": "The saved URL could not be decrypted. Edit the calendar and paste the URL again.",
-    "es-AR": "No se pudo descifrar la URL guardada. Editá el calendario y pegá la URL nuevamente."
-  },
-  "Sync_InvalidIcs": {
-    "en": "The response is not a valid iCalendar feed.",
-    "es-AR": "La respuesta no es un calendario iCalendar válido."
-  },
-  "Test_Connected": {
-    "en": "Connected · {0} upcoming events",
-    "es-AR": "Conectado · {0} eventos próximos"
   }
 }

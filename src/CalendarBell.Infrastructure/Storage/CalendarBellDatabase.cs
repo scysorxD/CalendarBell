@@ -22,6 +22,10 @@ public sealed class StorageCorruptedException : Exception
 
     public string? PreservedCopyPath { get; private init; }
 
+    /// <summary>The database file could not be opened at all (locked, permissions, disk).</summary>
+    public static StorageCorruptedException ForUnavailable(Exception innerException) =>
+        new("The CalendarBell database could not be opened.", innerException);
+
     internal static StorageCorruptedException ForDamagedFile(string? preservedCopyPath, Exception innerException) =>
         new("The CalendarBell database is damaged.", innerException) { PreservedCopyPath = preservedCopyPath };
 }
