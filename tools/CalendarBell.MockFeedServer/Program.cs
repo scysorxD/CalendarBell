@@ -109,7 +109,7 @@ static string Render(string name, ConcurrentDictionary<string, MockEvent> events
     {
         sb.Append("BEGIN:VEVENT\r\n");
         sb.Append("UID:").Append(e.Uid).Append("\r\n");
-        sb.Append("DTSTAMP:").Append(F(DateTimeOffset.UtcNow)).Append("\r\n");
+        sb.Append("DTSTAMP:").Append(F(e.Created)).Append("\r\n");
         sb.Append("DTSTART:").Append(F(e.Start)).Append("\r\n");
         sb.Append("DTEND:").Append(F(e.End)).Append("\r\n");
         sb.Append("SUMMARY:").Append(e.Title.Replace(",", "\\,", StringComparison.Ordinal)).Append("\r\n");
