@@ -13,7 +13,9 @@ public static class Strings
 
     public static CultureInfo Culture { get; set; } = CultureInfo.GetCultureInfo("en-US");
 
-    public static string Get(string key) => Manager.GetString(key, Culture) ?? key;
+    public static string Get(string key) => Get(key, Culture);
+
+    public static string Get(string key, CultureInfo culture) => Manager.GetString(key, culture) ?? key;
 
     public static string Format(string key, params object?[] args) =>
         string.Format(CultureInfo.CurrentCulture, Get(key), args);

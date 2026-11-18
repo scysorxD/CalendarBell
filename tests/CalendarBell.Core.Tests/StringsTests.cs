@@ -14,16 +14,8 @@ public class StringsTests
     [Fact]
     public void Spanish_resources_are_available_for_es_AR()
     {
-        var previous = Strings.Culture;
-        try
-        {
-            Strings.Culture = CultureInfo.GetCultureInfo("es-AR");
-            Assert.Equal("Posponer", Strings.Get("Action_Snooze"));
-        }
-        finally
-        {
-            Strings.Culture = previous;
-        }
+        // Explicit culture: tests run in parallel, so the global Strings.Culture must never be mutated here.
+        Assert.Equal("Posponer", Strings.Get("Action_Snooze", CultureInfo.GetCultureInfo("es-AR")));
     }
 
     [Fact]
