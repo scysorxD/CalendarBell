@@ -29,6 +29,12 @@ public sealed record ReminderOptions
     /// <summary>Calendars whose last successful sync is older than this are considered stale.</summary>
     public TimeSpan MaxCacheAge { get; init; } = TimeSpan.FromHours(24);
 
+    /// <summary>Recurrence expansion window: from now − 1 day …</summary>
+    public TimeSpan ExpansionPast { get; init; } = TimeSpan.FromDays(1);
+
+    /// <summary>… to now + 30 days.</summary>
+    public TimeSpan ExpansionFuture { get; init; } = TimeSpan.FromDays(30);
+
     /// <summary>Periodic re-evaluation to catch clock jumps and sleep/resume drift.</summary>
     public TimeSpan DriftCheckInterval { get; init; } = TimeSpan.FromSeconds(60);
 }
