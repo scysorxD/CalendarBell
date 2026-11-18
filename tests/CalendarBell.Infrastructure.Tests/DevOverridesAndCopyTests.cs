@@ -19,6 +19,14 @@ public sealed class DevOverridesAndCopyTests : IDisposable
     public void Dispose()
     {
         Registry.CurrentUser.DeleteSubKeyTree(_testKey, throwOnMissingSubKey: false);
+        using (var parent = Registry.CurrentUser.OpenSubKey(@"Software\CalendarBellTests"))
+        {
+            if (parent is { SubKeyCount: 0 })
+            {
+                Registry.CurrentUser.DeleteSubKey(@"Software\CalendarBellTests", throwOnMissingSubKey: false);
+            }
+        }
+
         try
         {
             Directory.Delete(_root, true);
