@@ -126,7 +126,10 @@ static string Render(string name, ConcurrentDictionary<string, MockEvent> events
     return sb.ToString();
 }
 
-internal sealed record MockEvent(string Uid, DateTimeOffset Start, DateTimeOffset End, string Busy, string Title, string? Status);
+internal sealed record MockEvent(string Uid, DateTimeOffset Start, DateTimeOffset End, string Busy, string Title, string? Status)
+{
+    public DateTimeOffset Created { get; init; } = DateTimeOffset.UtcNow;
+}
 
 internal sealed class EtagResult(IResult inner, string etag) : IResult
 {

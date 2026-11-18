@@ -37,7 +37,7 @@ public sealed record SyncOptions
 #if DEBUG
         true;
 #else
-        Environment.GetEnvironmentVariable(AllowHttpLocalhostVariable) == "1";
+        Environment.GetEnvironmentVariable(AllowHttpLocalhostVariable) == "1" || Storage.DevOverrides.Current?.AllowHttpLocalhost == true;
 #endif
 
     public static string AppVersion =>

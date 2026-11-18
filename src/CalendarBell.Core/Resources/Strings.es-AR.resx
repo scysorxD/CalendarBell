@@ -420,6 +420,9 @@
   <data name="Test_Connected" xml:space="preserve">
     <value>Conectado · {0} eventos próximos</value>
   </data>
+  <data name="Test_ConnectedOne" xml:space="preserve">
+    <value>Conectado · 1 evento próximo</value>
+  </data>
   <data name="Test_Failed" xml:space="preserve">
     <value>No se pudo mostrar la notificación de prueba: {0}</value>
   </data>

@@ -30,6 +30,11 @@ public sealed class DataPaths
     public static DataPaths Default()
     {
         var overridden = Environment.GetEnvironmentVariable(DataDirVariable);
+        if (string.IsNullOrWhiteSpace(overridden))
+        {
+            overridden = DevOverrides.Current?.DataDirectory;
+        }
+
         return string.IsNullOrWhiteSpace(overridden)
             ? new DataPaths(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CalendarBell"))
             : new DataPaths(overridden) { IsOverridden = true };

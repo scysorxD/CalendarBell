@@ -543,6 +543,10 @@
     "en": "Connected · {0} upcoming events",
     "es-AR": "Conectado · {0} eventos próximos"
   },
+  "Test_ConnectedOne": {
+    "en": "Connected · 1 upcoming event",
+    "es-AR": "Conectado · 1 evento próximo"
+  },
   "Test_Failed": {
     "en": "The test notification could not be shown: {0}",
     "es-AR": "No se pudo mostrar la notificación de prueba: {0}"

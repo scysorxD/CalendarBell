@@ -56,6 +56,11 @@ public sealed class PerUserInstaller
         foreach (var file in Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories))
         {
             var relative = Path.GetRelativePath(source, file);
+            if (string.Equals(relative, DevOverrides.FileName, StringComparison.OrdinalIgnoreCase))
+            {
+                continue; // development overrides must never reach an installed copy
+            }
+
             var target = Path.Combine(_paths.InstallDirectory, relative);
             Directory.CreateDirectory(Path.GetDirectoryName(target)!);
             File.Copy(file, target, overwrite: true);

@@ -191,7 +191,7 @@ public sealed class CalendarSyncService : IAsyncDisposable
             var occurrences = _parser.Parse(result.Body!, Guid.Empty, now - _reminderOptions.ExpansionPast, now + _reminderOptions.ExpansionFuture);
             var upcoming = occurrences.Count(o => !o.IsCancelled && o.StartUtc >= now);
             _logger.LogInformation("Test connection succeeded in {Elapsed} ms ({Count} upcoming)", (long)result.Elapsed.TotalMilliseconds, upcoming);
-            return new TestConnectionResult(true, Strings.Format("Test_Connected", upcoming), upcoming, now);
+            return new TestConnectionResult(true, Strings.Format(upcoming == 1 ? "Test_ConnectedOne" : "Test_Connected", upcoming), upcoming, now);
         }
         catch (IcsFormatException ex)
         {
