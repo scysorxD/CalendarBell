@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <Description>Development-only ICS feed server for manual and smoke testing (http://localhost only, synthetic data).</Description>
+  </PropertyGroup>
+</Project>

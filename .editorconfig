@@ -1,0 +1,22 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{csproj,props,targets,xml,xaml,resx,json,yml}]
+indent_size = 2
+
+[*.cs]
+csharp_style_namespace_declarations = file_scoped:warning
+dotnet_sort_system_directives_first = true
+# Tests and app code use ConfigureAwait(false) only in library code where it matters.
+dotnet_diagnostic.CA2007.severity = none
+# Logging message templates are intentionally simple.
+dotnet_diagnostic.CA1848.severity = none
+dotnet_diagnostic.CA1873.severity = none
+# Localization of exception messages is out of scope (they are never shown raw to users).
+dotnet_diagnostic.CA1303.severity = none

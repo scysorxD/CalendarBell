@@ -1,0 +1,27 @@
+<Window x:Class="CalendarBell.App.Views.SetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:CalendarBell.App.Localization"
+        Width="540" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource AppFont}" FontSize="14" UseLayoutRounding="True"
+        Icon="pack://application:,,,/Resources/Icons/calendarbell.ico">
+  <StackPanel Margin="28,24,28,22">
+    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+      <Image Source="pack://application:,,,/Resources/Icons/calendarbell.ico" Width="40" Height="40" Margin="0,0,14,0" />
+      <TextBlock x:Name="Heading" Style="{StaticResource PageTitle}" VerticalAlignment="Center" />
+    </StackPanel>
+    <TextBlock x:Name="Body" TextWrapping="Wrap" />
+    <Border Style="{StaticResource Card}" Margin="0,10,0,0" Padding="12,8" x:Name="PathCard">
+      <TextBlock x:Name="PathText" FontFamily="{StaticResource MonoFont}" FontSize="12.5" TextWrapping="Wrap" />
+    </Border>
+    <TextBlock x:Name="Note" Style="{StaticResource Secondary}" Margin="0,10,0,0" />
+    <CheckBox x:Name="Option" Margin="0,14,0,0" Visibility="Collapsed" />
+    <TextBlock x:Name="ErrorLine" Style="{StaticResource ErrorText}" Visibility="Collapsed" />
+    <ProgressBar x:Name="Progress" IsIndeterminate="True" Height="4" Margin="0,14,0,0" Visibility="Collapsed" />
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,22,0,0">
+      <Button x:Name="SecondaryButton" Padding="16,6" Margin="0,0,8,0" Click="OnSecondary" Visibility="Collapsed" />
+      <Button x:Name="PrimaryButton" Padding="20,6" IsDefault="True" Click="OnPrimary" Style="{DynamicResource AccentButtonStyle}" />
+      <Button x:Name="CancelButton" Margin="8,0,0,0" Padding="16,6" Content="{l:Loc Common_Cancel}" IsCancel="True" Click="OnCancel" />
+    </StackPanel>
+  </StackPanel>
+</Window>

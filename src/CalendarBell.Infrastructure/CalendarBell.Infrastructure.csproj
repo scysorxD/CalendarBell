@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>CalendarBell.Infrastructure</RootNamespace>
+    <Description>CalendarBell infrastructure: ICS parsing, HTTP sync, SQLite storage, DPAPI, logging, Windows startup and single instance.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CalendarBell.Core\CalendarBell.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Ical.Net" />
+    <PackageReference Include="Microsoft.Data.Sqlite" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
+    <PackageReference Include="Microsoft.Win32.SystemEvents" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="CalendarBell.Infrastructure.Tests" />
+  </ItemGroup>
+</Project>

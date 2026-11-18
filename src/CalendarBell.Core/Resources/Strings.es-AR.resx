@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About_Copied" xml:space="preserve">
+    <value>Diagnóstico copiado al portapapeles (sin URLs).</value>
+  </data>
+  <data name="About_CopyDiagnostics" xml:space="preserve">
+    <value>Copiar diagnóstico</value>
+  </data>
+  <data name="About_Description" xml:space="preserve">
+    <value>Recordatorios nativos de Windows para calendarios ICS. Sin cuenta, sin nube, sin telemetría.</value>
+  </data>
+  <data name="About_Diagnostics" xml:space="preserve">
+    <value>Diagnóstico</value>
+  </data>
+  <data name="About_OpenLogs" xml:space="preserve">
+    <value>Abrir carpeta de registros</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>Acerca de CalendarBell</value>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>Versión {0}</value>
+  </data>
+  <data name="Action_Dismiss" xml:space="preserve">
+    <value>Descartar</value>
+  </data>
+  <data name="Action_DismissAll" xml:space="preserve">
+    <value>Descartar todos</value>
+  </data>
+  <data name="Action_Snooze" xml:space="preserve">
+    <value>Posponer</value>
+  </data>
+  <data name="Action_ViewReminders" xml:space="preserve">
+    <value>Ver recordatorios</value>
+  </data>
+  <data name="App_Name" xml:space="preserve">
+    <value>CalendarBell</value>
+  </data>
+  <data name="Availability_Busy" xml:space="preserve">
+    <value>Ocupado</value>
+  </data>
+  <data name="Availability_OutOfOffice" xml:space="preserve">
+    <value>Fuera de la oficina</value>
+  </data>
+  <data name="Availability_Tentative" xml:space="preserve">
+    <value>Provisional</value>
+  </data>
+  <data name="Availability_Unknown" xml:space="preserve">
+    <value>Reunión</value>
+  </data>
+  <data name="Banner_DeliveryFailed" xml:space="preserve">
+    <value>No se pudo mostrar el último recordatorio. Ver Acerca de y diagnóstico.</value>
+  </data>
+  <data name="Banner_Elevated" xml:space="preserve">
+    <value>CalendarBell se está ejecutando como administrador. Windows no muestra notificaciones de apps elevadas; inicialo normalmente.</value>
+  </data>
+  <data name="Banner_NotificationsOff" xml:space="preserve">
+    <value>Las notificaciones de CalendarBell están desactivadas en la Configuración de Windows.</value>
+  </data>
+  <data name="Banner_OpenNotificationSettings" xml:space="preserve">
+    <value>Abrir configuración de notificaciones</value>
+  </data>
+  <data name="Banner_Paused" xml:space="preserve">
+    <value>Los recordatorios están en pausa hasta las {0}.</value>
+  </data>
+  <data name="Banner_PausedIndefinitely" xml:space="preserve">
+    <value>Los recordatorios están en pausa hasta que los reanudes.</value>
+  </data>
+  <data name="Banner_Quiet" xml:space="preserve">
+    <value>Windows está en No molestar o en modo presentación; las notificaciones pueden retenerse hasta que termine.</value>
+  </data>
+  <data name="Banner_ResetStorage" xml:space="preserve">
+    <value>Restablecer almacenamiento…</value>
+  </data>
+  <data name="Banner_Resume" xml:space="preserve">
+    <value>Reanudar</value>
+  </data>
+  <data name="Banner_StorageError" xml:space="preserve">
+    <value>CalendarBell no pudo leer sus datos locales, por eso los recordatorios están en pausa. Se guardó una copia para diagnóstico.</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="Diag_Calendars" xml:space="preserve">
+    <value>Calendarios</value>
+  </data>
+  <data name="Diag_DataFolder" xml:space="preserve">
+    <value>Carpeta de datos</value>
+  </data>
+  <data name="Diag_Elevated" xml:space="preserve">
+    <value>Ejecución elevada</value>
+  </data>
+  <data name="Diag_LastSuccess" xml:space="preserve">
+    <value>último éxito {0}</value>
+  </data>
+  <data name="Diag_LocalTime" xml:space="preserve">
+    <value>Hora local</value>
+  </data>
+  <data name="Diag_Never" xml:space="preserve">
+    <value>nunca</value>
+  </data>
+  <data name="Diag_NextRefresh" xml:space="preserve">
+    <value>próxima actualización {0}</value>
+  </data>
+  <data name="Diag_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Diag_NotificationSetting" xml:space="preserve">
+    <value>Configuración de notificaciones de Windows</value>
+  </data>
+  <data name="Diag_NotRegistered" xml:space="preserve">
+    <value>No registrado</value>
+  </data>
+  <data name="Diag_Pending" xml:space="preserve">
+    <value>Recordatorios pendientes</value>
+  </data>
+  <data name="Diag_Registered" xml:space="preserve">
+    <value>Registrado</value>
+  </data>
+  <data name="Diag_Registration" xml:space="preserve">
+    <value>Registro de notificaciones</value>
+  </data>
+  <data name="Diag_Startup" xml:space="preserve">
+    <value>Inicio con Windows</value>
+  </data>
+  <data name="Diag_TimeZone" xml:space="preserve">
+    <value>Zona horaria</value>
+  </data>
+  <data name="Diag_Yes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="Editor_AddTitle" xml:space="preserve">
+    <value>Agregar calendario</value>
+  </data>
+  <data name="Editor_CancelTest" xml:space="preserve">
+    <value>Cancelar prueba</value>
+  </data>
+  <data name="Editor_EditTitle" xml:space="preserve">
+    <value>Editar calendario</value>
+  </data>
+  <data name="Editor_Enabled" xml:space="preserve">
+    <value>Habilitado</value>
+  </data>
+  <data name="Editor_HideUrl" xml:space="preserve">
+    <value>Ocultar URL</value>
+  </data>
+  <data name="Editor_Name" xml:space="preserve">
+    <value>Nombre del calendario</value>
+  </data>
+  <data name="Editor_Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="Editor_SaveFailed" xml:space="preserve">
+    <value>No se pudo guardar: {0}</value>
+  </data>
+  <data name="Editor_ShowUrl" xml:space="preserve">
+    <value>Mostrar URL</value>
+  </data>
+  <data name="Editor_Test" xml:space="preserve">
+    <value>Probar conexión</value>
+  </data>
+  <data name="Editor_TestCancelled" xml:space="preserve">
+    <value>Prueba cancelada.</value>
+  </data>
+  <data name="Editor_Testing" xml:space="preserve">
+    <value>Probando conexión…</value>
+  </data>
+  <data name="Editor_Url" xml:space="preserve">
+    <value>URL del calendario</value>
+  </data>
+  <data name="Editor_UrlHint" xml:space="preserve">
+    <value>Pegá el enlace ICS publicado (https://…). Se guarda cifrado para tu cuenta de Windows y nunca aparece en los registros.</value>
+  </data>
+  <data name="Editor_UrlUnchanged" xml:space="preserve">
+    <value>Se conserva la URL guardada. Pegá una nueva para reemplazarla.</value>
+  </data>
+  <data name="Install_AlreadyInstalled" xml:space="preserve">
+    <value>Hay una versión anterior instalada que se actualizará. Se conservan tu configuración y tus calendarios.</value>
+  </data>
+  <data name="Install_Failed" xml:space="preserve">
+    <value>La instalación falló: {0}</value>
+  </data>
+  <data name="Install_Install" xml:space="preserve">
+    <value>Instalar</value>
+  </data>
+  <data name="Install_Message" xml:space="preserve">
+    <value>CalendarBell se instalará solo para tu cuenta de Windows, sin permisos de administrador, en:</value>
+  </data>
+  <data name="Install_RunOnce" xml:space="preserve">
+    <value>Ejecutar sin instalar</value>
+  </data>
+  <data name="Install_StartsAutomatically" xml:space="preserve">
+    <value>Se inicia automáticamente al iniciar sesión y queda en el área de notificación.</value>
+  </data>
+  <data name="Install_Title" xml:space="preserve">
+    <value>Instalar CalendarBell</value>
+  </data>
+  <data name="Install_Update" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="Install_Working" xml:space="preserve">
+    <value>Instalando…</value>
+  </data>
+  <data name="Name_Duplicate" xml:space="preserve">
+    <value>Otro calendario ya usa este nombre.</value>
+  </data>
+  <data name="Name_Invalid" xml:space="preserve">
+    <value>El nombre contiene caracteres no permitidos.</value>
+  </data>
+  <data name="Name_Required" xml:space="preserve">
+    <value>Ingresá un nombre.</value>
+  </data>
+  <data name="Name_TooLong" xml:space="preserve">
+    <value>Usá como máximo 40 caracteres.</value>
+  </data>
+  <data name="Remove_Confirm" xml:space="preserve">
+    <value>Quitar</value>
+  </data>
+  <data name="Remove_Message" xml:space="preserve">
+    <value>¿Quitar “{0}”? Se eliminarán su URL cifrada, los eventos en caché y los recordatorios. Los demás calendarios no se modifican.</value>
+  </data>
+  <data name="Remove_Title" xml:space="preserve">
+    <value>Quitar calendario</value>
+  </data>
+  <data name="Reset_Confirm" xml:space="preserve">
+    <value>Restablecer</value>
+  </data>
+  <data name="Reset_Message" xml:space="preserve">
+    <value>¿Apartar el archivo dañado y empezar con uno nuevo? Tus calendarios se restauran desde su copia cifrada; se pierde el historial de recordatorios.</value>
+  </data>
+  <data name="Reset_Title" xml:space="preserve">
+    <value>Restablecer almacenamiento</value>
+  </data>
+  <data name="Settings_AddCalendar" xml:space="preserve">
+    <value>Agregar calendario</value>
+  </data>
+  <data name="Settings_CalendarCount" xml:space="preserve">
+    <value>{0} de {1} habilitados</value>
+  </data>
+  <data name="Settings_Calendars" xml:space="preserve">
+    <value>Calendarios</value>
+  </data>
+  <data name="Settings_CheckNow" xml:space="preserve">
+    <value>Comprobar ahora</value>
+  </data>
+  <data name="Settings_Diagnostics" xml:space="preserve">
+    <value>Acerca de y diagnóstico</value>
+  </data>
+  <data name="Settings_Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Settings_EnabledToggle" xml:space="preserve">
+    <value>Habilitado</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_InitialReminder" xml:space="preserve">
+    <value>Aviso inicial: 15 min antes</value>
+  </data>
+  <data name="Settings_NoCalendars" xml:space="preserve">
+    <value>Todavía no hay calendarios. Agregá el enlace ICS publicado de un calendario para recibir un aviso 15 minutos antes de cada reunión.</value>
+  </data>
+  <data name="Settings_OpenUpcoming" xml:space="preserve">
+    <value>Ver próximos</value>
+  </data>
+  <data name="Settings_PlaySound" xml:space="preserve">
+    <value>Reproducir sonido de notificación</value>
+  </data>
+  <data name="Settings_PrivacyHint" xml:space="preserve">
+    <value>Si está desactivado, el título de la reunión puede aparecer en los avisos. Nunca se muestran descripciones, asistentes ni enlaces.</value>
+  </data>
+  <data name="Settings_PrivacyMode" xml:space="preserve">
+    <value>Modo privado (solo disponibilidad)</value>
+  </data>
+  <data name="Settings_Remove" xml:space="preserve">
+    <value>Quitar</value>
+  </data>
+  <data name="Settings_SendTest" xml:space="preserve">
+    <value>Enviar notificación de prueba</value>
+  </data>
+  <data name="Settings_SnoozeTargets" xml:space="preserve">
+    <value>Posponer a: 10 min antes / 5 min antes / al comenzar</value>
+  </data>
+  <data name="Settings_StartWithWindows" xml:space="preserve">
+    <value>Iniciar con Windows</value>
+  </data>
+  <data name="Settings_StatusAt" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="Settings_SyncedAt" xml:space="preserve">
+    <value>Sincronizado · {0}</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>CalendarBell · Configuración</value>
+  </data>
+  <data name="Snooze_0" xml:space="preserve">
+    <value>Al comenzar</value>
+  </data>
+  <data name="Snooze_10" xml:space="preserve">
+    <value>10 min antes</value>
+  </data>
+  <data name="Snooze_5" xml:space="preserve">
+    <value>5 min antes</value>
+  </data>
+  <data name="State_Disabled" xml:space="preserve">
+    <value>Deshabilitado</value>
+  </data>
+  <data name="State_InvalidCalendar" xml:space="preserve">
+    <value>Calendario inválido</value>
+  </data>
+  <data name="State_NetworkError" xml:space="preserve">
+    <value>Error de red</value>
+  </data>
+  <data name="State_NeverSynced" xml:space="preserve">
+    <value>Nunca sincronizado</value>
+  </data>
+  <data name="State_NotificationsOff" xml:space="preserve">
+    <value>Notificaciones desactivadas</value>
+  </data>
+  <data name="State_Paused" xml:space="preserve">
+    <value>En pausa</value>
+  </data>
+  <data name="State_Refreshing" xml:space="preserve">
+    <value>Actualizando</value>
+  </data>
+  <data name="State_Stale" xml:space="preserve">
+    <value>Datos desactualizados</value>
+  </data>
+  <data name="State_StorageError" xml:space="preserve">
+    <value>Error de almacenamiento</value>
+  </data>
+  <data name="State_Synced" xml:space="preserve">
+    <value>Sincronizado</value>
+  </data>
+  <data name="State_SyncWarning" xml:space="preserve">
+    <value>Advertencia de sincronización</value>
+  </data>
+  <data name="Status_Calendars" xml:space="preserve">
+    <value>{0} calendarios · {1}</value>
+  </data>
+  <data name="Status_Cancelled" xml:space="preserve">
+    <value>Cancelado</value>
+  </data>
+  <data name="Status_Dismissed" xml:space="preserve">
+    <value>Descartado</value>
+  </data>
+  <data name="Status_Expired" xml:space="preserve">
+    <value>Vencido</value>
+  </data>
+  <data name="Status_NoCalendars" xml:space="preserve">
+    <value>Sin calendarios</value>
+  </data>
+  <data name="Status_Notified" xml:space="preserve">
+    <value>Notificado</value>
+  </data>
+  <data name="Status_OneCalendar" xml:space="preserve">
+    <value>1 calendario · {0}</value>
+  </data>
+  <data name="Status_Pending" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="Status_Snoozed" xml:space="preserve">
+    <value>Pospuesto a las {0}</value>
+  </data>
+  <data name="Sync_AccessDenied" xml:space="preserve">
+    <value>Acceso denegado (HTTP {0}). El enlace puede haber vencido.</value>
+  </data>
+  <data name="Sync_InsecureRedirect" xml:space="preserve">
+    <value>El servidor redirigió a una dirección insegura.</value>
+  </data>
+  <data name="Sync_InvalidIcs" xml:space="preserve">
+    <value>La respuesta no es un calendario iCalendar válido.</value>
+  </data>
+  <data name="Sync_InvalidUrl" xml:space="preserve">
+    <value>La URL del calendario no es válida.</value>
+  </data>
+  <data name="Sync_Network" xml:space="preserve">
+    <value>Error de red: {0}</value>
+  </data>
+  <data name="Sync_NotFound" xml:space="preserve">
+    <value>No se encontró el calendario (HTTP 404).</value>
+  </data>
+  <data name="Sync_RateLimited" xml:space="preserve">
+    <value>Demasiadas solicitudes. Se reintentará más tarde.</value>
+  </data>
+  <data name="Sync_ServerError" xml:space="preserve">
+    <value>El servidor devolvió un error (HTTP {0}).</value>
+  </data>
+  <data name="Sync_Timeout" xml:space="preserve">
+    <value>El servidor no respondió a tiempo.</value>
+  </data>
+  <data name="Sync_TooLarge" xml:space="preserve">
+    <value>El calendario es demasiado grande (más de {0} MB).</value>
+  </data>
+  <data name="Sync_TooManyRedirects" xml:space="preserve">
+    <value>Demasiadas redirecciones.</value>
+  </data>
+  <data name="Sync_UrlUnreadable" xml:space="preserve">
+    <value>No se pudo descifrar la URL guardada. Editá el calendario y pegá la URL nuevamente.</value>
+  </data>
+  <data name="Test_Connected" xml:space="preserve">
+    <value>Conectado · {0} eventos próximos</value>
+  </data>
+  <data name="Test_ConnectedOne" xml:space="preserve">
+    <value>Conectado · 1 evento próximo</value>
+  </data>
+  <data name="Test_Failed" xml:space="preserve">
+    <value>No se pudo mostrar la notificación de prueba: {0}</value>
+  </data>
+  <data name="Test_Sent" xml:space="preserve">
+    <value>Notificación de prueba enviada.</value>
+  </data>
+  <data name="Toast_GroupIn" xml:space="preserve">
+    <value>{0} reuniones en {1} min</value>
+  </data>
+  <data name="Toast_GroupNow" xml:space="preserve">
+    <value>{0} reuniones empiezan ahora</value>
+  </data>
+  <data name="Toast_MemberLine" xml:space="preserve">
+    <value>{0} · {1} · {2}</value>
+  </data>
+  <data name="Toast_More" xml:space="preserve">
+    <value>+{0} más</value>
+  </data>
+  <data name="Toast_SingleIn" xml:space="preserve">
+    <value>{0} · Reunión en {1} min</value>
+  </data>
+  <data name="Toast_SingleNow" xml:space="preserve">
+    <value>{0} · La reunión empieza ahora</value>
+  </data>
+  <data name="Toast_Summary" xml:space="preserve">
+    <value>{0} recordatorios requieren atención</value>
+  </data>
+  <data name="Toast_TestCalendar" xml:space="preserve">
+    <value>Notificación de prueba</value>
+  </data>
+  <data name="Toast_TimeRange" xml:space="preserve">
+    <value>{0} · {1}–{2}</value>
+  </data>
+  <data name="Tooltip_Format" xml:space="preserve">
+    <value>CalendarBell · {0}</value>
+  </data>
+  <data name="Tray_About" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
+  <data name="Tray_CheckNow" xml:space="preserve">
+    <value>Comprobar ahora</value>
+  </data>
+  <data name="Tray_Exit" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="Tray_Pause" xml:space="preserve">
+    <value>Pausar recordatorios</value>
+  </data>
+  <data name="Tray_Pause30" xml:space="preserve">
+    <value>30 minutos</value>
+  </data>
+  <data name="Tray_Pause60" xml:space="preserve">
+    <value>1 hora</value>
+  </data>
+  <data name="Tray_PauseUntilResumed" xml:space="preserve">
+    <value>Hasta reanudar</value>
+  </data>
+  <data name="Tray_Resume" xml:space="preserve">
+    <value>Reanudar recordatorios</value>
+  </data>
+  <data name="Tray_Settings" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="Tray_StartWithWindows" xml:space="preserve">
+    <value>Iniciar con Windows</value>
+  </data>
+  <data name="Tray_Status" xml:space="preserve">
+    <value>Estado: {0}</value>
+  </data>
+  <data name="Tray_Upcoming" xml:space="preserve">
+    <value>Próximos recordatorios</value>
+  </data>
+  <data name="Uninstall_DeleteData" xml:space="preserve">
+    <value>Eliminar también mi configuración, las URLs cifradas de los calendarios y los registros</value>
+  </data>
+  <data name="Uninstall_Done" xml:space="preserve">
+    <value>CalendarBell se desinstaló.</value>
+  </data>
+  <data name="Uninstall_Message" xml:space="preserve">
+    <value>Se quitarán de esta cuenta CalendarBell, su acceso directo del menú Inicio y su inicio automático.</value>
+  </data>
+  <data name="Uninstall_Title" xml:space="preserve">
+    <value>Desinstalar CalendarBell</value>
+  </data>
+  <data name="Uninstall_Uninstall" xml:space="preserve">
+    <value>Desinstalar</value>
+  </data>
+  <data name="Upcoming_ActionFailed" xml:space="preserve">
+    <value>No se pudo guardar el cambio.</value>
+  </data>
+  <data name="Upcoming_AllCalendars" xml:space="preserve">
+    <value>Todos los calendarios</value>
+  </data>
+  <data name="Upcoming_AllStatuses" xml:space="preserve">
+    <value>Todos los estados</value>
+  </data>
+  <data name="Upcoming_Empty" xml:space="preserve">
+    <value>No hay reuniones en las próximas 24 horas.</value>
+  </data>
+  <data name="Upcoming_FromNotification" xml:space="preserve">
+    <value>Desde la notificación</value>
+  </data>
+  <data name="Upcoming_ShowAll" xml:space="preserve">
+    <value>Mostrar todo</value>
+  </data>
+  <data name="Upcoming_ShowDismissed" xml:space="preserve">
+    <value>Mostrar descartados</value>
+  </data>
+  <data name="Upcoming_SnoozeTo" xml:space="preserve">
+    <value>Posponer a</value>
+  </data>
+  <data name="Upcoming_Title" xml:space="preserve">
+    <value>Próximos recordatorios</value>
+  </data>
+  <data name="Upcoming_Today" xml:space="preserve">
+    <value>Hoy</value>
+  </data>
+  <data name="Upcoming_Tomorrow" xml:space="preserve">
+    <value>Mañana</value>
+  </data>
+  <data name="Url_HttpsRequired" xml:space="preserve">
+    <value>La URL debe comenzar con https://</value>
+  </data>
+  <data name="Url_Invalid" xml:space="preserve">
+    <value>No es una URL válida.</value>
+  </data>
+  <data name="Url_NoCredentials" xml:space="preserve">
+    <value>No se admiten URLs con usuario o contraseña.</value>
+  </data>
+  <data name="Url_Required" xml:space="preserve">
+    <value>Ingresá la URL del calendario.</value>
+  </data>
+  <data name="Url_TooLong" xml:space="preserve">
+    <value>La URL es demasiado larga (máximo 4096 caracteres).</value>
+  </data>
+</root>
