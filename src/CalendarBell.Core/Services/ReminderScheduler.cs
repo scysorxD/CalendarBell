@@ -26,8 +26,7 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
     private readonly SemaphoreSlim _gate = new(1, 1);
     private readonly ConcurrentDictionary<string, Entry> _entries = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<Guid, CalendarState> _calendars = new();
-    private readonly object _tailLock = new();
-    private Task _tail = Task.CompletedTask;
+    private readonly SerialWorkQueue _work;
 
     private ITimer? _dueTimer;
     private ITimer? _driftTimer;
@@ -44,6 +43,7 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
         _time = time ?? throw new ArgumentNullException(nameof(time));
         _options = options ?? throw new ArgumentNullException(nameof(options));
         _logger = (ILogger?)logger ?? NullLogger.Instance;
+        _work = new SerialWorkQueue(_logger);
     }
 
     public event EventHandler? Changed;
@@ -438,26 +438,7 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
     }
 
     /// <summary>Completes when all background work queued so far (timer callbacks, calendar updates) has run.</summary>
-    internal async Task IdleAsync()
-    {
-        while (true)
-        {
-            Task tail;
-            lock (_tailLock)
-            {
-                tail = _tail;
-            }
-
-            await tail.ConfigureAwait(false);
-            lock (_tailLock)
-            {
-                if (ReferenceEquals(tail, _tail))
-                {
-                    return;
-                }
-            }
-        }
-    }
+    internal Task IdleAsync() => _work.IdleAsync();
 
     public async ValueTask DisposeAsync()
     {
@@ -477,8 +458,7 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
             await _driftTimer.DisposeAsync().ConfigureAwait(false);
         }
 
-        await IdleAsync().ConfigureAwait(false);
-        _gate.Dispose();
+        await _work.CloseAsync().ConfigureAwait(false);
     }
 
     private async Task ProcessDueAsync()
@@ -734,31 +714,9 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
 
     private void Schedule(Func<Task> operation)
     {
-        if (_disposed)
+        if (!_disposed)
         {
-            return;
-        }
-
-        lock (_tailLock)
-        {
-            _tail = _tail.ContinueWith(
-                async _ =>
-                {
-                    try
-                    {
-                        await operation().ConfigureAwait(false);
-                    }
-                    catch (ObjectDisposedException) when (_disposed)
-                    {
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Scheduler background operation failed");
-                    }
-                },
-                CancellationToken.None,
-                TaskContinuationOptions.None,
-                TaskScheduler.Default).Unwrap();
+            _work.Schedule(operation);
         }
     }
 

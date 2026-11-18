@@ -1,0 +1,22 @@
+{
+  "Toast_SingleIn": { "en": "{0} · Meeting in {1} min", "es-AR": "{0} · Reunión en {1} min" },
+  "Toast_SingleNow": { "en": "{0} · Meeting starting now", "es-AR": "{0} · La reunión empieza ahora" },
+  "Toast_GroupIn": { "en": "{0} meetings in {1} min", "es-AR": "{0} reuniones en {1} min" },
+  "Toast_GroupNow": { "en": "{0} meetings starting now", "es-AR": "{0} reuniones empiezan ahora" },
+  "Toast_Summary": { "en": "{0} reminders need attention", "es-AR": "{0} recordatorios requieren atención" },
+  "Toast_TimeRange": { "en": "{0} · {1}–{2}", "es-AR": "{0} · {1}–{2}" },
+  "Toast_MemberLine": { "en": "{0} · {1} · {2}", "es-AR": "{0} · {1} · {2}" },
+  "Toast_More": { "en": "+{0} more", "es-AR": "+{0} más" },
+  "Toast_TestCalendar": { "en": "Test notification", "es-AR": "Notificación de prueba" },
+  "Snooze_10": { "en": "10 min before", "es-AR": "10 min antes" },
+  "Snooze_5": { "en": "5 min before", "es-AR": "5 min antes" },
+  "Snooze_0": { "en": "At start", "es-AR": "Al comenzar" },
+  "Action_Snooze": { "en": "Snooze", "es-AR": "Posponer" },
+  "Action_Dismiss": { "en": "Dismiss", "es-AR": "Descartar" },
+  "Action_ViewReminders": { "en": "View reminders", "es-AR": "Ver recordatorios" },
+  "Action_DismissAll": { "en": "Dismiss all", "es-AR": "Descartar todos" },
+  "Availability_Busy": { "en": "Busy", "es-AR": "Ocupado" },
+  "Availability_Tentative": { "en": "Tentative", "es-AR": "Provisional" },
+  "Availability_OutOfOffice": { "en": "Out of office", "es-AR": "Fuera de la oficina" },
+  "Availability_Unknown": { "en": "Meeting", "es-AR": "Reunión" }
+}
