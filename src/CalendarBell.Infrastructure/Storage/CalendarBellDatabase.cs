@@ -120,7 +120,7 @@ public sealed class CalendarBellDatabase : IDisposable
 
     public string JournalMode { get; }
 
-    public static CalendarBellDatabase Open(DataPaths paths)
+    public static CalendarBellDatabase Open(DataPaths paths, TimeProvider? time = null)
     {
         ArgumentNullException.ThrowIfNull(paths);
         paths.EnsureCreated();
@@ -151,25 +151,25 @@ public sealed class CalendarBellDatabase : IDisposable
         catch (SqliteException ex) when (ex.SqliteErrorCode is SqliteCorrupt or SqliteNotADatabase)
         {
             SqliteConnection.ClearAllPools();
-            throw StorageCorruptedException.ForDamagedFile(PreserveCopy(paths), ex);
+            throw StorageCorruptedException.ForDamagedFile(PreserveCopy(paths, time ?? TimeProvider.System), ex);
         }
     }
 
     /// <summary>Explicit user action: move the damaged database aside (kept for diagnosis) and start a new one.</summary>
-    public static CalendarBellDatabase ResetAfterCorruption(DataPaths paths)
+    public static CalendarBellDatabase ResetAfterCorruption(DataPaths paths, TimeProvider? time = null)
     {
         ArgumentNullException.ThrowIfNull(paths);
         SqliteConnection.ClearAllPools();
-        var suffix = ".corrupt-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff", CultureInfo.InvariantCulture);
-        foreach (var file in new[] { paths.DatabasePath, paths.DatabasePath + "-wal", paths.DatabasePath + "-shm" })
+        var aside = UniqueAsidePath(paths, time ?? TimeProvider.System);
+        foreach (var (file, target) in new[] { (paths.DatabasePath, aside), (paths.DatabasePath + "-wal", aside + "-wal"), (paths.DatabasePath + "-shm", aside + "-shm") })
         {
             if (File.Exists(file))
             {
-                File.Move(file, file.Replace("calendarbell.db", "calendarbell.db" + suffix, StringComparison.Ordinal));
+                File.Move(file, target);
             }
         }
 
-        return Open(paths);
+        return Open(paths, time);
     }
 
     public SqliteConnection OpenConnection()
@@ -221,11 +221,11 @@ public sealed class CalendarBellDatabase : IDisposable
         return current;
     }
 
-    private static string? PreserveCopy(DataPaths paths)
+    private static string? PreserveCopy(DataPaths paths, TimeProvider time)
     {
         try
         {
-            var copy = paths.DatabasePath + ".corrupt-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff", CultureInfo.InvariantCulture);
+            var copy = UniqueAsidePath(paths, time);
             File.Copy(paths.DatabasePath, copy, overwrite: false);
             return copy;
         }
@@ -233,5 +233,18 @@ public sealed class CalendarBellDatabase : IDisposable
         {
             return null;
         }
+    }
+
+    /// <summary>calendarbell.db.corrupt-&lt;timestamp&gt;[-n]: never overwrites an earlier preserved copy.</summary>
+    private static string UniqueAsidePath(DataPaths paths, TimeProvider time)
+    {
+        var basePath = paths.DatabasePath + ".corrupt-" + time.GetUtcNow().ToString("yyyyMMdd-HHmmss-fff", CultureInfo.InvariantCulture);
+        var candidate = basePath;
+        for (var n = 1; File.Exists(candidate) || File.Exists(candidate + "-wal"); n++)
+        {
+            candidate = basePath + "-" + n.ToString(CultureInfo.InvariantCulture);
+        }
+
+        return candidate;
     }
 }

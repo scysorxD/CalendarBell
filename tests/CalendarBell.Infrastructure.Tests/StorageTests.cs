@@ -271,6 +271,20 @@ public sealed class StorageTests : IDisposable
     }
 
     [Fact]
+    public void Reset_in_the_same_millisecond_as_the_preserved_copy_does_not_collide()
+    {
+        var frozen = new Microsoft.Extensions.Time.Testing.FakeTimeProvider(new DateTimeOffset(2026, 11, 18, 12, 0, 0, TimeSpan.Zero));
+        Directory.CreateDirectory(_paths.Root);
+        File.WriteAllBytes(_paths.DatabasePath, Encoding.ASCII.GetBytes(new string('x', 200)));
+        Assert.Throws<StorageCorruptedException>(() => CalendarBellDatabase.Open(_paths, frozen));
+
+        using var db = CalendarBellDatabase.ResetAfterCorruption(_paths, frozen);
+
+        Assert.Equal(CalendarBellDatabase.CurrentSchemaVersion, db.SchemaVersion);
+        Assert.Equal(2, Directory.EnumerateFiles(_paths.Root, "calendarbell.db.corrupt-*").Count());
+    }
+
+    [Fact]
     public void Settings_default_when_missing_and_round_trip_atomically()
     {
         var store = new SettingsStore(_paths);

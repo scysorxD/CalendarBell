@@ -44,8 +44,7 @@ public sealed class SchedulerPersistenceIntegrationTests : IDisposable
         var occurrence = new EventOccurrence(CalendarA, "uid", "key-1", T1030, T1030.AddMinutes(30), Availability.Busy, false, false, null, "fp");
         var (scheduler, db) = await StartAsync();
         await scheduler.ReconcileAsync(CalendarA, [occurrence], CancellationToken.None);
-        _time.SetUtcNow(T1030.AddMinutes(-15));
-        await scheduler.IdleAsync();
+        await StepToAsync(scheduler, T1030.AddMinutes(-15));
         _time.SetUtcNow(T1030.AddMinutes(-14));
         await scheduler.SnoozeAsync(["key-1"], 5, CancellationToken.None);
         await scheduler.DisposeAsync();
@@ -54,13 +53,22 @@ public sealed class SchedulerPersistenceIntegrationTests : IDisposable
 
         (scheduler, db) = await StartAsync();
         await scheduler.ReconcileAsync(CalendarA, [occurrence], CancellationToken.None);
-        _time.SetUtcNow(T1030.AddMinutes(-5));
-        await scheduler.IdleAsync();
+        await StepToAsync(scheduler, T1030.AddMinutes(-5));
         await scheduler.DisposeAsync();
         db.Dispose();
 
         Assert.Equal(2, _fired.Count);
         Assert.Equal(ReminderKind.Snooze, _fired[1].Kind);
+    }
+
+    private async Task StepToAsync(ReminderScheduler scheduler, DateTimeOffset target)
+    {
+        while (_time.GetUtcNow() < target)
+        {
+            var next = _time.GetUtcNow() + TimeSpan.FromSeconds(1);
+            _time.SetUtcNow(next > target ? target : next);
+            await scheduler.IdleAsync();
+        }
     }
 
     private sealed class Sink(List<DueReminder> fired) : IReminderSink

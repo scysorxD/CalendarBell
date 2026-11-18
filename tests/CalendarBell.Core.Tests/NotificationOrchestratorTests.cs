@@ -39,12 +39,11 @@ public sealed class NotificationOrchestratorTests : IAsyncDisposable
         await _orchestrator.DisposeAsync();
     }
 
-    private async Task AdvanceTo(DateTimeOffset t)
+    private Task AdvanceTo(DateTimeOffset t) => _time.StepToAsync(t, async () =>
     {
-        _time.SetUtcNow(t);
         await _scheduler.IdleAsync();
         await _orchestrator.IdleAsync();
-    }
+    });
 
     private async Task SetupAsync(params EventOccurrence[] occurrences)
     {

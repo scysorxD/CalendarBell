@@ -33,11 +33,7 @@ public sealed class ReminderSchedulerTests : IAsyncDisposable
 
     private async Task StartAsync() => await _scheduler.StartAsync(Ct);
 
-    private async Task AdvanceTo(DateTimeOffset t)
-    {
-        _time.SetUtcNow(t);
-        await _scheduler.IdleAsync();
-    }
+    private Task AdvanceTo(DateTimeOffset t) => _time.StepToAsync(t, () => _scheduler.IdleAsync());
 
     private async Task RestartAsync()
     {

@@ -642,7 +642,8 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
             return;
         }
 
-        var delay = next.Value - now;
+        // Re-read the clock: persisting state may have taken a while since "now" was captured.
+        var delay = next.Value - _time.GetUtcNow();
         if (delay <= TimeSpan.Zero && allowImmediate)
         {
             _dueTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
