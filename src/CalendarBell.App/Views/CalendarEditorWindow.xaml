@@ -23,9 +23,11 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
       <PasswordBox x:Name="UrlPassword" Grid.Column="0" MaxLength="4096" PasswordChanged="OnPasswordChanged"
+                   PreviewKeyDown="OnUrlPreviewKeyDown"
                    AutomationProperties.Name="{l:Loc Editor_Url}"
                    Visibility="{Binding IsUrlVisible, Converter={StaticResource VisibleWhen}, ConverterParameter=Invert}" />
       <TextBox x:Name="UrlText" Grid.Column="0" MaxLength="4096" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"
+               PreviewKeyDown="OnUrlPreviewKeyDown"
                AutomationProperties.Name="{l:Loc Editor_Url}"
                Visibility="{Binding IsUrlVisible, Converter={StaticResource VisibleWhen}}" />
       <Button Grid.Column="1" Margin="8,0,0,0" Padding="10,4" Content="{Binding UrlVisibilityLabel}" Command="{Binding ToggleUrlVisibilityCommand}"

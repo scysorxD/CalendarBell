@@ -90,6 +90,30 @@ public sealed class PublishedAppSmokeTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Ctrl_V_pastes_a_Windows_link_into_the_masked_calendar_url()
+    {
+        Assert.SkipUnless(Enabled, "Set CALENDARBELL_SMOKE=1 to run Windows smoke tests.");
+        Assert.SkipUnless(File.Exists(Path.Combine(PublishedApp, "CalendarBell.exe")), "Publish first (scripts/publish.ps1).");
+        _appDir = Path.Combine(_work, "app");
+        _dataDir = Path.Combine(_work, "data");
+        CopyDirectory(PublishedApp, _appDir);
+
+        var script = Path.Combine(RepoRoot, "tests", "CalendarBell.Windows.SmokeTests", "VerifyCalendarUrlPaste.ps1");
+        var start = new ProcessStartInfo("powershell.exe")
+        {
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            RedirectStandardError = true,
+            ArgumentList = { "-NoProfile", "-Sta", "-File", script, "-Exe", Exe, "-DataDirectory", _dataDir, "-Link" },
+        };
+        using var check = Process.Start(start)!;
+        var ct = TestContext.Current.CancellationToken;
+        var error = await check.StandardError.ReadToEndAsync(ct);
+        await check.WaitForExitAsync(ct);
+        Assert.True(check.ExitCode == 0, error);
+    }
+
+    [Fact]
     public async Task End_to_end_reminders_group_snooze_dismiss_single_instance_and_activation_when_closed()
     {
         Assert.SkipUnless(Enabled, "Set CALENDARBELL_SMOKE=1 to run Windows smoke tests.");
