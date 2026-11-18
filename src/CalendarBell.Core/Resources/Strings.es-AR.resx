@@ -45,6 +45,45 @@
   <data name="Snooze_5" xml:space="preserve">
     <value>5 min antes</value>
   </data>
+  <data name="Sync_AccessDenied" xml:space="preserve">
+    <value>Acceso denegado (HTTP {0}). El enlace puede haber vencido.</value>
+  </data>
+  <data name="Sync_InsecureRedirect" xml:space="preserve">
+    <value>El servidor redirigió a una dirección insegura.</value>
+  </data>
+  <data name="Sync_InvalidIcs" xml:space="preserve">
+    <value>La respuesta no es un calendario iCalendar válido.</value>
+  </data>
+  <data name="Sync_InvalidUrl" xml:space="preserve">
+    <value>La URL del calendario no es válida.</value>
+  </data>
+  <data name="Sync_Network" xml:space="preserve">
+    <value>Error de red: {0}</value>
+  </data>
+  <data name="Sync_NotFound" xml:space="preserve">
+    <value>No se encontró el calendario (HTTP 404).</value>
+  </data>
+  <data name="Sync_RateLimited" xml:space="preserve">
+    <value>Demasiadas solicitudes. Se reintentará más tarde.</value>
+  </data>
+  <data name="Sync_ServerError" xml:space="preserve">
+    <value>El servidor devolvió un error (HTTP {0}).</value>
+  </data>
+  <data name="Sync_Timeout" xml:space="preserve">
+    <value>El servidor no respondió a tiempo.</value>
+  </data>
+  <data name="Sync_TooLarge" xml:space="preserve">
+    <value>El calendario es demasiado grande (más de {0} MB).</value>
+  </data>
+  <data name="Sync_TooManyRedirects" xml:space="preserve">
+    <value>Demasiadas redirecciones.</value>
+  </data>
+  <data name="Sync_UrlUnreadable" xml:space="preserve">
+    <value>No se pudo descifrar la URL guardada. Editá el calendario y pegá la URL nuevamente.</value>
+  </data>
+  <data name="Test_Connected" xml:space="preserve">
+    <value>Conectado · {0} eventos próximos</value>
+  </data>
   <data name="Toast_GroupIn" xml:space="preserve">
     <value>{0} reuniones en {1} min</value>
   </data>
@@ -71,5 +110,20 @@
   </data>
   <data name="Toast_TimeRange" xml:space="preserve">
     <value>{0} · {1}–{2}</value>
+  </data>
+  <data name="Url_HttpsRequired" xml:space="preserve">
+    <value>La URL debe comenzar con https://</value>
+  </data>
+  <data name="Url_Invalid" xml:space="preserve">
+    <value>No es una URL válida.</value>
+  </data>
+  <data name="Url_NoCredentials" xml:space="preserve">
+    <value>No se admiten URLs con usuario o contraseña.</value>
+  </data>
+  <data name="Url_Required" xml:space="preserve">
+    <value>Ingresá la URL del calendario.</value>
+  </data>
+  <data name="Url_TooLong" xml:space="preserve">
+    <value>La URL es demasiado larga (máximo 4096 caracteres).</value>
   </data>
 </root>

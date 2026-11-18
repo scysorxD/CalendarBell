@@ -1,22 +1,154 @@
 {
-  "Toast_SingleIn": { "en": "{0} · Meeting in {1} min", "es-AR": "{0} · Reunión en {1} min" },
-  "Toast_SingleNow": { "en": "{0} · Meeting starting now", "es-AR": "{0} · La reunión empieza ahora" },
-  "Toast_GroupIn": { "en": "{0} meetings in {1} min", "es-AR": "{0} reuniones en {1} min" },
-  "Toast_GroupNow": { "en": "{0} meetings starting now", "es-AR": "{0} reuniones empiezan ahora" },
-  "Toast_Summary": { "en": "{0} reminders need attention", "es-AR": "{0} recordatorios requieren atención" },
-  "Toast_TimeRange": { "en": "{0} · {1}–{2}", "es-AR": "{0} · {1}–{2}" },
-  "Toast_MemberLine": { "en": "{0} · {1} · {2}", "es-AR": "{0} · {1} · {2}" },
-  "Toast_More": { "en": "+{0} more", "es-AR": "+{0} más" },
-  "Toast_TestCalendar": { "en": "Test notification", "es-AR": "Notificación de prueba" },
-  "Snooze_10": { "en": "10 min before", "es-AR": "10 min antes" },
-  "Snooze_5": { "en": "5 min before", "es-AR": "5 min antes" },
-  "Snooze_0": { "en": "At start", "es-AR": "Al comenzar" },
-  "Action_Snooze": { "en": "Snooze", "es-AR": "Posponer" },
-  "Action_Dismiss": { "en": "Dismiss", "es-AR": "Descartar" },
-  "Action_ViewReminders": { "en": "View reminders", "es-AR": "Ver recordatorios" },
-  "Action_DismissAll": { "en": "Dismiss all", "es-AR": "Descartar todos" },
-  "Availability_Busy": { "en": "Busy", "es-AR": "Ocupado" },
-  "Availability_Tentative": { "en": "Tentative", "es-AR": "Provisional" },
-  "Availability_OutOfOffice": { "en": "Out of office", "es-AR": "Fuera de la oficina" },
-  "Availability_Unknown": { "en": "Meeting", "es-AR": "Reunión" }
+  "Toast_SingleIn": {
+    "en": "{0} · Meeting in {1} min",
+    "es-AR": "{0} · Reunión en {1} min"
+  },
+  "Toast_SingleNow": {
+    "en": "{0} · Meeting starting now",
+    "es-AR": "{0} · La reunión empieza ahora"
+  },
+  "Toast_GroupIn": {
+    "en": "{0} meetings in {1} min",
+    "es-AR": "{0} reuniones en {1} min"
+  },
+  "Toast_GroupNow": {
+    "en": "{0} meetings starting now",
+    "es-AR": "{0} reuniones empiezan ahora"
+  },
+  "Toast_Summary": {
+    "en": "{0} reminders need attention",
+    "es-AR": "{0} recordatorios requieren atención"
+  },
+  "Toast_TimeRange": {
+    "en": "{0} · {1}–{2}",
+    "es-AR": "{0} · {1}–{2}"
+  },
+  "Toast_MemberLine": {
+    "en": "{0} · {1} · {2}",
+    "es-AR": "{0} · {1} · {2}"
+  },
+  "Toast_More": {
+    "en": "+{0} more",
+    "es-AR": "+{0} más"
+  },
+  "Toast_TestCalendar": {
+    "en": "Test notification",
+    "es-AR": "Notificación de prueba"
+  },
+  "Snooze_10": {
+    "en": "10 min before",
+    "es-AR": "10 min antes"
+  },
+  "Snooze_5": {
+    "en": "5 min before",
+    "es-AR": "5 min antes"
+  },
+  "Snooze_0": {
+    "en": "At start",
+    "es-AR": "Al comenzar"
+  },
+  "Action_Snooze": {
+    "en": "Snooze",
+    "es-AR": "Posponer"
+  },
+  "Action_Dismiss": {
+    "en": "Dismiss",
+    "es-AR": "Descartar"
+  },
+  "Action_ViewReminders": {
+    "en": "View reminders",
+    "es-AR": "Ver recordatorios"
+  },
+  "Action_DismissAll": {
+    "en": "Dismiss all",
+    "es-AR": "Descartar todos"
+  },
+  "Availability_Busy": {
+    "en": "Busy",
+    "es-AR": "Ocupado"
+  },
+  "Availability_Tentative": {
+    "en": "Tentative",
+    "es-AR": "Provisional"
+  },
+  "Availability_OutOfOffice": {
+    "en": "Out of office",
+    "es-AR": "Fuera de la oficina"
+  },
+  "Availability_Unknown": {
+    "en": "Meeting",
+    "es-AR": "Reunión"
+  },
+  "Url_Required": {
+    "en": "Enter the calendar URL.",
+    "es-AR": "Ingresá la URL del calendario."
+  },
+  "Url_TooLong": {
+    "en": "The URL is too long (maximum 4096 characters).",
+    "es-AR": "La URL es demasiado larga (máximo 4096 caracteres)."
+  },
+  "Url_Invalid": {
+    "en": "This is not a valid URL.",
+    "es-AR": "No es una URL válida."
+  },
+  "Url_HttpsRequired": {
+    "en": "The URL must start with https://",
+    "es-AR": "La URL debe comenzar con https://"
+  },
+  "Url_NoCredentials": {
+    "en": "URLs with a user name or password are not supported.",
+    "es-AR": "No se admiten URLs con usuario o contraseña."
+  },
+  "Sync_AccessDenied": {
+    "en": "Access denied (HTTP {0}). The link may have expired.",
+    "es-AR": "Acceso denegado (HTTP {0}). El enlace puede haber vencido."
+  },
+  "Sync_NotFound": {
+    "en": "Calendar not found (HTTP 404).",
+    "es-AR": "No se encontró el calendario (HTTP 404)."
+  },
+  "Sync_ServerError": {
+    "en": "The server returned an error (HTTP {0}).",
+    "es-AR": "El servidor devolvió un error (HTTP {0})."
+  },
+  "Sync_RateLimited": {
+    "en": "Too many requests. Retrying later.",
+    "es-AR": "Demasiadas solicitudes. Se reintentará más tarde."
+  },
+  "Sync_Timeout": {
+    "en": "The server did not respond in time.",
+    "es-AR": "El servidor no respondió a tiempo."
+  },
+  "Sync_Network": {
+    "en": "Network error: {0}",
+    "es-AR": "Error de red: {0}"
+  },
+  "Sync_TooLarge": {
+    "en": "The calendar is too large (over {0} MB).",
+    "es-AR": "El calendario es demasiado grande (más de {0} MB)."
+  },
+  "Sync_InsecureRedirect": {
+    "en": "The server redirected to an insecure address.",
+    "es-AR": "El servidor redirigió a una dirección insegura."
+  },
+  "Sync_TooManyRedirects": {
+    "en": "Too many redirects.",
+    "es-AR": "Demasiadas redirecciones."
+  },
+  "Sync_InvalidUrl": {
+    "en": "The calendar URL is not valid.",
+    "es-AR": "La URL del calendario no es válida."
+  },
+  "Sync_UrlUnreadable": {
+    "en": "The saved URL could not be decrypted. Edit the calendar and paste the URL again.",
+    "es-AR": "No se pudo descifrar la URL guardada. Editá el calendario y pegá la URL nuevamente."
+  },
+  "Sync_InvalidIcs": {
+    "en": "The response is not a valid iCalendar feed.",
+    "es-AR": "La respuesta no es un calendario iCalendar válido."
+  },
+  "Test_Connected": {
+    "en": "Connected · {0} upcoming events",
+    "es-AR": "Conectado · {0} eventos próximos"
+  }
 }
