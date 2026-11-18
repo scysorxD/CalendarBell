@@ -15,12 +15,12 @@ $env:CALENDARBELL_SMOKE = "1"; dotnet test tests/CalendarBell.Windows.SmokeTests
 
 | Suite | Tests | Result |
 |---|---|---|
-| `CalendarBell.Core.Tests` | 118 | 118 passed |
-| `CalendarBell.Infrastructure.Tests` | 130 | 130 passed |
+| `CalendarBell.Core.Tests` | 125 | 125 passed |
+| `CalendarBell.Infrastructure.Tests` | 140 | 140 passed |
 | `CalendarBell.Windows.SmokeTests` | 2 | 1 passed + 1 opt-in skipped in a normal run; **2 passed** with `CALENDARBELL_SMOKE=1` against the published build |
-| **Total** (`dotnet test -c Release`) | **250** | **249 passed, 1 skipped, 0 failed** |
+| **Total** (`dotnet test -c Release`) | **267** | **266 passed, 1 skipped, 0 failed** |
 
-Stability: the full suite was run 10 times in a row without failures after two timing issues were root-caused and
+Stability: the full suite was run 10 times (and 3 more times after the review fixes) in a row without failures after two timing issues were root-caused and
 fixed (see the git history: corrupt-file name collision within one millisecond; FakeTimeProvider multi-minute jumps
 racing a background timer re-arm).
 
@@ -67,11 +67,12 @@ with DPAPI-encrypted URLs containing a fake token, starts the app and then:
 1. waits for the real group toast at T−15 (A and B at the same minute);
 2. clicks **Snooze / 5 min before** through the registered COM activator (`INotificationActivationCallback`, the same
    path the shell uses) and verifies both members are snoozed to *their own* start − 5 min in SQLite;
-3. waits for the next single toast and clicks **Dismiss**;
+3. waits for the next single toast and clicks **Dismiss**; a third toast (Calendar B) is deliberately left unanswered;
 4. launches a second instance (`--upcoming`): it exits and only one resident process remains;
 5. asks the app to exit through the single-instance pipe;
 6. with the app **closed**, clicks **Dismiss** on the earlier group toast: Windows relaunches CalendarBell, the click
-   is processed (`Started by a notification click`), both occurrences become dismissed;
+   is processed (`Started by a notification click`), both occurrences become dismissed, and the relaunch **keeps**
+   the unanswered toast (`kept 1 pending toast(s)`);
 7. restarts the app and verifies dismissed reminders do not reappear;
 8. verifies no file in the data folder contains the URL or the token.
 
@@ -126,3 +127,15 @@ Done with the release build, an isolated data folder and the mock feed server (f
 6. *Pause reminders → 1 hour*, then *Resume reminders*.
 7. Sign out and in (or reboot): the bell comes back without a console; snoozes and dismissals are remembered.
 8. *Settings → Apps → Installed apps → CalendarBell → Uninstall*.
+
+## Final code review
+
+An independent whole-branch review (read-only) found no critical issues and 4 important ones; 9 minor findings were
+re-graded by their effect on a user and fixed in the same pass (each with a test that failed first, except two
+App-layer fixes verified by build and the smoke test). See `ReviewFixTests` in both test projects. Fixed:
+pending toasts wiped on restart, 304 responses freezing the 30-day expansion window, in-flight refresh undoing
+disable/rename/remove, storage failure suppressing a toast, unexpected parser exceptions causing a retry loop, the
+8 s spacing using the wall clock, group toasts retracted by another calendar, titles kept after enabling Privacy
+mode, removed URLs left in a backup copy, partial wiring after a storage reset, pipe listener spinning, offset-only
+time-zone fallbacks shadowing another feed's DST rules, and setup failing when another user runs CalendarBell.
+Deferred (minor): a lock around the pause value; a test with real timers across sleep.

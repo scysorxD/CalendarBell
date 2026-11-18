@@ -54,11 +54,12 @@ flowchart LR
 | Sync and scheduling are separate | Polling every 2 min would make reminders up to 2 min late. The scheduler arms one timer for the earliest due instant and fires at that instant (±timer resolution). |
 | Pure `ReminderStateMachine` | All rules (absolute snooze targets, 2 s margin, late/"starting now"/expired windows, start-time changes) are pure functions with explicit "now", unit-tested exhaustively. |
 | Absolute snooze implemented by the app | Windows' system snooze is relative to the click. CalendarBell uses an app-handled `Snooze` button with a selection input (`10`/`5`/`0` minutes before start) and resolves the target against each occurrence's own start. |
-| One toast per batch, ≤ 1 new toast / 8 s | Simultaneous reminders (±1 s) are coalesced; same start (±60 s) → group toast with group Snooze/Dismiss; different starts → summary with *View reminders* / *Dismiss all*. Everything queued when a slot opens becomes one toast, so "At start" never waits behind other toasts. |
+| One toast per batch, ≤ 1 new toast / 8 s | Spacing uses a monotonic clock (wall-clock changes cannot stall it). Simultaneous reminders (±1 s) are coalesced; same start (±60 s) → group toast with group Snooze/Dismiss; different starts → summary with *View reminders* / *Dismiss all*. Everything queued when a slot opens becomes one toast, so "At start" never waits behind other toasts. |
 | Batch identity persisted | Toast arguments carry only `action` and a 12-hex batch id (`action=snooze&b=…`); members are looked up in SQLite, so clicks work after a restart or when Windows relaunches the app. |
-| At-most-once delivery | A phase is persisted as sent *before* the toast is handed to Windows. A crash between both loses at most one toast; it never duplicates. Start-up reconciliation removes toasts whose occurrences no longer need attention. |
+| At-most-once delivery | A phase is persisted as sent *before* the toast is handed to Windows. A crash between both loses at most one toast; it never duplicates. Saving the batch is best-effort: a storage error never suppresses the toast. Start-up reconciliation (after calendars are loaded) removes only toasts whose occurrences no longer need attention. |
 | Occurrence identity | `OccurrenceKey = SHA-256(CalendarId, UID, RECURRENCE-ID)` → independent of the current start time (moves keep identity), different per calendar (same UID in two calendars is two occurrences), and opaque (no UID in logs or toast arguments). |
 | Start-time change = new temporal revision | A moved meeting gets a new reminder (even after Dismiss). Title/end/availability changes keep the state (no re-alert for cosmetic edits). |
+| Full re-download every 12 h | Conditional GET (ETag/Last-Modified) is used between full downloads; a 304 cannot move the recurrence window, so the body is fetched and expanded again at least every 12 h. |
 | Feed failures keep the cache | Network errors, HTTP errors, 200 with HTML or truncated ICS never delete data. Only a complete valid feed can cancel occurrences (inside the expansion window). Data older than 24 h is "stale": its reminders are held (not fired, not consumed). |
 | TZID resolution never falls back to UTC | IANA → Windows id → Windows display name → the calendar's own VTIMEZONE rules matched against system zones → `(UTC±hh:mm)` prefix → local zone with a warning. Ical.Net's default maps Outlook display-name TZIDs to UTC. |
 | DPAPI (CurrentUser + app entropy) for URLs | A published ICS link is a secret. It exists in clear text only in memory while fetching or editing. |
@@ -115,7 +116,7 @@ Persisted per occurrence (`Reminders` table): `calendar_id`, `occurrence_key`, `
 
 | File | Content |
 |---|---|
-| `calendarbell.db` (+ `-wal`, `-shm`) | `Calendars` (name, DPAPI URL, enabled), `SyncState` (ETag, Last-Modified, last success, backoff), `OccurrencesCache` (start, end, availability, cancelled, title only when Privacy mode is off), `Reminders`, `ToastBatches`, `SchemaMigrations`. |
+| `calendarbell.db` (+ `-wal`, `-shm`) | Schema v2. `Calendars` (name, DPAPI URL, enabled), `SyncState` (ETag, Last-Modified, last success, last full parse, backoff), `OccurrencesCache` (start, end, availability, cancelled, title only when Privacy mode is off), `Reminders`, `ToastBatches`, `SchemaMigrations`. |
 | `calendars.backup.json` (+ `.bak`) | Calendar list with DPAPI ciphertext only (restore after a storage reset). |
 | `settings.json` (+ `.bak`) | Non-sensitive preferences, pause end, window positions. Written atomically. |
 | `logs\calendarbell*.log` | Redacted rolling log. |
