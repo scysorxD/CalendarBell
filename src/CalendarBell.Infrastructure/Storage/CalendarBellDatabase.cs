@@ -36,7 +36,7 @@ public sealed class StorageCorruptedException : Exception
 /// </summary>
 public sealed class CalendarBellDatabase : IDisposable
 {
-    public const int CurrentSchemaVersion = 1;
+    public const int CurrentSchemaVersion = 2;
 
     private const int SqliteCorrupt = 11;
     private const int SqliteNotADatabase = 26;
@@ -207,22 +207,35 @@ public sealed class CalendarBellDatabase : IDisposable
         var current = Convert.ToInt32(Scalar(connection, "SELECT COALESCE(MAX(version), 0) FROM SchemaMigrations"), CultureInfo.InvariantCulture);
         if (current < 1)
         {
-            using var transaction = connection.BeginTransaction();
-            foreach (var statement in SchemaV1)
-            {
-                Execute(connection, statement, transaction);
-            }
-
-            using var insert = connection.CreateCommand();
-            insert.Transaction = transaction;
-            insert.CommandText = "INSERT INTO SchemaMigrations (version, applied_utc) VALUES (1, $now)";
-            insert.Parameters.AddWithValue("$now", DateTimeOffset.UtcNow.UtcTicks);
-            insert.ExecuteNonQuery();
-            transaction.Commit();
+            ApplyMigration(connection, 1, SchemaV1);
             current = 1;
         }
 
+        if (current < 2)
+        {
+            // v2: remember when the feed body was last expanded, so 304 responses cannot freeze the 30-day window.
+            ApplyMigration(connection, 2, ["ALTER TABLE SyncState ADD COLUMN last_full_parse_utc INTEGER NULL"]);
+            current = 2;
+        }
+
         return current;
+    }
+
+    private static void ApplyMigration(SqliteConnection connection, int version, IEnumerable<string> statements)
+    {
+        using var transaction = connection.BeginTransaction();
+        foreach (var statement in statements)
+        {
+            Execute(connection, statement, transaction);
+        }
+
+        using var insert = connection.CreateCommand();
+        insert.Transaction = transaction;
+        insert.CommandText = "INSERT INTO SchemaMigrations (version, applied_utc) VALUES ($version, $now)";
+        insert.Parameters.AddWithValue("$version", version);
+        insert.Parameters.AddWithValue("$now", DateTimeOffset.UtcNow.UtcTicks);
+        insert.ExecuteNonQuery();
+        transaction.Commit();
     }
 
     private static string? PreserveCopy(DataPaths paths, TimeProvider time)

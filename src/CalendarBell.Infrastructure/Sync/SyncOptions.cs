@@ -9,6 +9,10 @@ public sealed record SyncOptions
 
     public TimeSpan PollInterval { get; init; } = TimeSpan.FromMinutes(2);
 
+    /// <summary>Conditional requests (ETag/Last-Modified) are skipped once the last full parse is this old, so the
+    /// recurrence expansion window keeps moving forward even for feeds that always answer 304.</summary>
+    public TimeSpan FullDownloadInterval { get; init; } = TimeSpan.FromHours(12);
+
     public TimeSpan RequestTimeout { get; init; } = TimeSpan.FromSeconds(15);
 
     public long MaxResponseBytes { get; init; } = 10L * 1024 * 1024;

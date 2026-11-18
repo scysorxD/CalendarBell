@@ -46,17 +46,23 @@ internal static class SetupActions
             }
         }
 
-        // The process may still be releasing file handles after the mutex is free.
+        // The process may still be releasing file handles after the mutex is free. Only this session's processes:
+        // another signed-in user's CalendarBell is neither ours to wait for nor accessible (access denied).
+        var session = Process.GetCurrentProcess().SessionId;
         foreach (var process in Process.GetProcessesByName("CalendarBell").Where(p => p.Id != Environment.ProcessId))
         {
             using (process)
             {
                 try
                 {
-                    process.WaitForExit(TimeSpan.FromSeconds(10));
+                    if (process.SessionId == session)
+                    {
+                        process.WaitForExit(TimeSpan.FromSeconds(10));
+                    }
                 }
-                catch (InvalidOperationException)
+                catch (Exception ex) when (ex is InvalidOperationException or System.ComponentModel.Win32Exception or NotSupportedException)
                 {
+                    // exited meanwhile or not accessible
                 }
             }
         }

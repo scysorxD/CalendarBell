@@ -16,6 +16,9 @@ public interface IReminderStore
 
     /// <summary>Deletes records and occurrences of events that started before <paramref name="olderThanUtc"/>.</summary>
     Task PruneAsync(DateTimeOffset olderThanUtc, CancellationToken ct);
+
+    /// <summary>Privacy mode turned on: forget every cached meeting title.</summary>
+    Task ClearTitlesAsync(CancellationToken ct);
 }
 
 /// <summary>A toast as shown to the user: which occurrences it represents, so actions survive restarts.</summary>

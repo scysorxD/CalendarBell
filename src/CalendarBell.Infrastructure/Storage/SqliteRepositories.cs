@@ -98,6 +98,14 @@ public sealed class SqliteCalendarRepository : ICalendarRepository
     {
         var all = await GetAllAsync(ct).ConfigureAwait(false);
         AtomicFile.WriteAllText(_paths.CalendarBackupPath, JsonSerializer.Serialize(all));
+
+        // The atomic write keeps the previous version as .bak; for this file that copy would still hold the
+        // encrypted URL of a removed or replaced calendar, so it is deleted (spec: Remove deletes the encrypted URL).
+        var previous = _paths.CalendarBackupPath + ".bak";
+        if (File.Exists(previous))
+        {
+            File.Delete(previous);
+        }
     }
 }
 
@@ -116,7 +124,7 @@ public sealed class SqliteSyncStateStore : ISyncStateStore
         using var command = connection.CreateCommand();
         command.CommandText = """
             SELECT calendar_id, etag, last_modified, last_attempt_utc, last_success_utc, consecutive_failures,
-                   next_refresh_utc, last_state, last_error, last_http_status, upcoming_count
+                   next_refresh_utc, last_state, last_error, last_http_status, upcoming_count, last_full_parse_utc
             FROM SyncState
             """;
         using var reader = command.ExecuteReader();
@@ -135,6 +143,7 @@ public sealed class SqliteSyncStateStore : ISyncStateStore
                 LastError = reader.IsDBNull(8) ? null : reader.GetString(8),
                 LastHttpStatus = reader.IsDBNull(9) ? null : reader.GetInt32(9),
                 UpcomingCount = reader.GetInt32(10),
+                LastFullParseUtc = Db.Time(reader, 11),
             });
         }
 
@@ -148,13 +157,14 @@ public sealed class SqliteSyncStateStore : ISyncStateStore
         using var command = connection.CreateCommand();
         command.CommandText = """
             INSERT INTO SyncState (calendar_id, etag, last_modified, last_attempt_utc, last_success_utc, consecutive_failures,
-                                   next_refresh_utc, last_state, last_error, last_http_status, upcoming_count)
-            VALUES ($id, $etag, $lm, $attempt, $success, $failures, $next, $state, $error, $http, $upcoming)
+                                   next_refresh_utc, last_state, last_error, last_http_status, upcoming_count, last_full_parse_utc)
+            VALUES ($id, $etag, $lm, $attempt, $success, $failures, $next, $state, $error, $http, $upcoming, $fullparse)
             ON CONFLICT(calendar_id) DO UPDATE SET
                 etag = excluded.etag, last_modified = excluded.last_modified, last_attempt_utc = excluded.last_attempt_utc,
                 last_success_utc = excluded.last_success_utc, consecutive_failures = excluded.consecutive_failures,
                 next_refresh_utc = excluded.next_refresh_utc, last_state = excluded.last_state, last_error = excluded.last_error,
-                last_http_status = excluded.last_http_status, upcoming_count = excluded.upcoming_count
+                last_http_status = excluded.last_http_status, upcoming_count = excluded.upcoming_count,
+                last_full_parse_utc = excluded.last_full_parse_utc
             """;
         command.Parameters.AddWithValue("$id", state.CalendarId.ToString());
         command.Parameters.AddWithValue("$etag", (object?)state.ETag ?? DBNull.Value);
@@ -167,6 +177,7 @@ public sealed class SqliteSyncStateStore : ISyncStateStore
         command.Parameters.AddWithValue("$error", (object?)state.LastError ?? DBNull.Value);
         command.Parameters.AddWithValue("$http", (object?)state.LastHttpStatus ?? DBNull.Value);
         command.Parameters.AddWithValue("$upcoming", state.UpcomingCount);
+        command.Parameters.AddWithValue("$fullparse", Db.Value(state.LastFullParseUtc));
         command.ExecuteNonQuery();
         return Task.CompletedTask;
     }

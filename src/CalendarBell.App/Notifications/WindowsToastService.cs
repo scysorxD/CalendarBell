@@ -107,13 +107,14 @@ public sealed class WindowsToastService : INotificationPresenter, IDisposable
     }
 
     /// <summary>Removes reminder toasts that no longer need attention (start-up reconciliation).</summary>
-    public async Task RemoveWhereAsync(Func<string, string, bool> isObsolete)
+    public async Task<int> RemoveWhereAsync(Func<string, string, bool> isObsolete)
     {
         if (!_registered)
         {
-            return;
+            return 0;
         }
 
+        var removed = 0;
         try
         {
             foreach (var n in await AppNotificationManager.Default.GetAllAsync())
@@ -121,6 +122,7 @@ public sealed class WindowsToastService : INotificationPresenter, IDisposable
                 if (isObsolete(n.Tag ?? string.Empty, n.Group ?? string.Empty))
                 {
                     await AppNotificationManager.Default.RemoveByTagAndGroupAsync(n.Tag, n.Group);
+                    removed++;
                 }
             }
         }
@@ -128,6 +130,8 @@ public sealed class WindowsToastService : INotificationPresenter, IDisposable
         {
             _logger.LogWarning("Reconciling active notifications failed: {Error}", LogSanitizer.Describe(ex));
         }
+
+        return removed;
     }
 
     /// <summary>The notification activation that launched this process, if any. Call after Register.</summary>

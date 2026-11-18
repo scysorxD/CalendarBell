@@ -176,6 +176,15 @@ public sealed class SqliteReminderStore : IReminderStore, IToastBatchStore
         return Task.CompletedTask;
     }
 
+    public Task ClearTitlesAsync(CancellationToken ct)
+    {
+        using var connection = _db.OpenConnection();
+        using var command = connection.CreateCommand();
+        command.CommandText = "UPDATE OccurrencesCache SET title = NULL WHERE title IS NOT NULL";
+        command.ExecuteNonQuery();
+        return Task.CompletedTask;
+    }
+
     public Task SaveBatchAsync(ToastBatchRecord batch, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(batch);

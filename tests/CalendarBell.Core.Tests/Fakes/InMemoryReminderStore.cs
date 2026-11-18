@@ -12,6 +12,7 @@ internal sealed class InMemoryReminderStore : IReminderStore, IToastBatchStore
     public ConcurrentDictionary<string, ToastBatchRecord> Batches { get; } = new();
     public int SaveCalls { get; private set; }
     public bool FailSaves { get; set; }
+    public bool FailBatchSaves { get; set; }
 
     public Task<ReminderSnapshot> LoadAsync(CancellationToken ct) =>
         Task.FromResult(new ReminderSnapshot(Records.Values.ToList(), Occurrences.Values.ToList()));
@@ -63,8 +64,23 @@ internal sealed class InMemoryReminderStore : IReminderStore, IToastBatchStore
         return Task.CompletedTask;
     }
 
+    public Task ClearTitlesAsync(CancellationToken ct)
+    {
+        foreach (var o in Occurrences.Values.ToList())
+        {
+            Occurrences[o.OccurrenceKey] = o with { PrivacySafeTitle = null };
+        }
+
+        return Task.CompletedTask;
+    }
+
     public Task SaveBatchAsync(ToastBatchRecord batch, CancellationToken ct)
     {
+        if (FailBatchSaves)
+        {
+            throw new IOException("simulated batch storage failure");
+        }
+
         Batches[batch.BatchId] = batch;
         return Task.CompletedTask;
     }

@@ -24,8 +24,11 @@ public sealed class NotificationOrchestrator : IReminderSink, IAsyncDisposable
     private readonly object _lock = new();
     private readonly List<DueReminder> _queue = [];
     private readonly ITimer _pumpTimer;
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<string, ToastBatchRecord> _unsavedBatches = new(StringComparer.Ordinal);
     private IReminderScheduler? _scheduler;
-    private DateTimeOffset? _lastEmissionUtc;
+
+    // Monotonic timestamp (TimeProvider.GetTimestamp): a wall-clock change must never stall the 8 s spacing.
+    private long? _lastEmissionTimestamp;
     private bool _disposed;
 
     public NotificationOrchestrator(
@@ -96,8 +99,18 @@ public sealed class NotificationOrchestrator : IReminderSink, IAsyncDisposable
         }
 
         var scheduler = _scheduler ?? throw new InvalidOperationException("Scheduler not attached.");
-        var batch = await _batches.GetBatchAsync(action.BatchId, ct).ConfigureAwait(false);
-        if (batch is null)
+        ToastBatchRecord? batch;
+        try
+        {
+            batch = await _batches.GetBatchAsync(action.BatchId, ct).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _logger.LogWarning("Reading toast batch failed: {Error}", ex.GetType().Name);
+            batch = null;
+        }
+
+        if (batch is null && !_unsavedBatches.TryGetValue(action.BatchId, out batch))
         {
             _logger.LogWarning("Toast action '{Action}' for unknown or expired batch ignored", action.RawAction);
             return new ToastActionResult(false, "Unknown notification");
@@ -158,7 +171,6 @@ public sealed class NotificationOrchestrator : IReminderSink, IAsyncDisposable
 
     private void ArmPump()
     {
-        var now = _time.GetUtcNow();
         lock (_lock)
         {
             if (_queue.Count == 0 || _disposed)
@@ -166,17 +178,21 @@ public sealed class NotificationOrchestrator : IReminderSink, IAsyncDisposable
                 return;
             }
 
-            var nextSlot = _lastEmissionUtc is { } last ? last + _options.MinToastInterval : now;
-            if (nextSlot <= now)
+            var wait = RemainingSpacing();
+            if (wait <= TimeSpan.Zero)
             {
                 _work.Schedule(EmitAsync);
             }
             else
             {
-                _pumpTimer.Change(nextSlot - now, Timeout.InfiniteTimeSpan);
+                _pumpTimer.Change(wait, Timeout.InfiniteTimeSpan);
             }
         }
     }
+
+    /// <summary>Time left before another toast may be shown (monotonic; immune to wall-clock changes).</summary>
+    private TimeSpan RemainingSpacing() =>
+        _lastEmissionTimestamp is { } last ? _options.MinToastInterval - _time.GetElapsedTime(last) : TimeSpan.Zero;
 
     private async Task EmitAsync()
     {
@@ -195,9 +211,10 @@ public sealed class NotificationOrchestrator : IReminderSink, IAsyncDisposable
                 return;
             }
 
-            if (_lastEmissionUtc is { } last && now - last < _options.MinToastInterval)
+            var wait = RemainingSpacing();
+            if (wait > TimeSpan.Zero)
             {
-                _pumpTimer.Change(last + _options.MinToastInterval - now, Timeout.InfiniteTimeSpan);
+                _pumpTimer.Change(wait, Timeout.InfiniteTimeSpan);
                 return;
             }
 
@@ -213,16 +230,28 @@ public sealed class NotificationOrchestrator : IReminderSink, IAsyncDisposable
                 return;
             }
 
-            _lastEmissionUtc = now;
+            _lastEmissionTimestamp = _time.GetTimestamp();
         }
 
         var batch = _batcher.Build(current, now, _preferences(), ToastArguments.NewBatchId());
         var keys = batch.Members.Select(m => m.Record.OccurrenceKey).ToList();
+        var record = new ToastBatchRecord(batch.BatchId, batch.Group, keys, now, batch.ExpiresUtc);
+
+        // Storage problems must never suppress the reminder itself: persist best-effort, keep an in-memory copy
+        // so the toast's buttons still work in this session, and always attempt to show it.
         try
         {
-            await _batches.SaveBatchAsync(new ToastBatchRecord(batch.BatchId, batch.Group, keys, now, batch.ExpiresUtc), CancellationToken.None).ConfigureAwait(false);
+            await _batches.SaveBatchAsync(record, CancellationToken.None).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _unsavedBatches[record.BatchId] = record;
+            _logger.LogError("Saving toast batch failed ({Error}); the toast is shown anyway", ex.GetType().Name);
+        }
+
+        try
+        {
             await _presenter.ShowAsync(batch, CancellationToken.None).ConfigureAwait(false);
-            await scheduler.RecordToastAsync(keys, batch.Tag, batch.Group, CancellationToken.None).ConfigureAwait(false);
             LastShownUtc = now;
             SetFailed(false);
             _logger.LogInformation("Toast shown: kind={Kind} members={Count}", batch.Kind, keys.Count);
@@ -231,6 +260,16 @@ public sealed class NotificationOrchestrator : IReminderSink, IAsyncDisposable
         {
             SetFailed(true);
             _logger.LogError(ex, "Showing toast failed (kind={Kind}, members={Count})", batch.Kind, keys.Count);
+            return;
+        }
+
+        try
+        {
+            await scheduler.RecordToastAsync(keys, batch.Tag, batch.Group, CancellationToken.None).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _logger.LogWarning("Recording the toast tag failed ({Error})", ex.GetType().Name);
         }
     }
 

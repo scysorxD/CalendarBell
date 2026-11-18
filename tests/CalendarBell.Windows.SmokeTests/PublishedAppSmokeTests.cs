@@ -101,6 +101,7 @@ public sealed class PublishedAppSmokeTests : IAsyncLifetime
         var a1 = await AddEventAsync("a", "smoke-a1@calendar-a.example", 15 * 60 + 25, ct);
         await AddEventAsync("b", "smoke-b1@calendar-b.example", 15 * 60 + 25, ct, busy: "TENTATIVE");
         var a2 = await AddEventAsync("a", "smoke-a2@calendar-a.example", 15 * 60 + 55, ct);
+        await AddEventAsync("b", "smoke-b4@calendar-b.example", 15 * 60 + 80, ct); // its toast is left unanswered
         await SeedCalendarsAsync(ct);
 
         // 1. Start: no console, tray process resident, calendars synced, group toast at T-15 for A+B.
@@ -120,6 +121,11 @@ public sealed class PublishedAppSmokeTests : IAsyncLifetime
         await WaitUntilAsync(() => Record(single.Keys[0]).Dismissed, TimeSpan.FromSeconds(15), ct);
         Assert.Equal(a2.Start, Record(single.Keys[0]).Start);
 
+        // 3b. A third toast (Calendar B) arrives and is deliberately left on screen.
+        await WaitUntilAsync(() => Batches().Count >= 3, TimeSpan.FromSeconds(60), ct);
+        var pending = Batches()[2];
+        Assert.False(Record(pending.Keys[0]).Dismissed);
+
         // 4. A second launch forwards to the resident instance and exits; still one process.
         var second = Process.Start(new ProcessStartInfo(Exe, "--upcoming") { UseShellExecute = false })!;
         Assert.True(second.WaitForExit(15_000));
@@ -136,6 +142,11 @@ public sealed class PublishedAppSmokeTests : IAsyncLifetime
         ToastActivator.Activate(registration.Value, $"action=dismiss&b={group.Id}", new Dictionary<string, string>());
         await WaitUntilAsync(() => group.Keys.All(k => Record(k).Dismissed), TimeSpan.FromSeconds(30), ct);
         var relaunched = Assert.Single(AppProcesses());
+
+        // 6b. The relaunch must keep the unanswered toast (it still waits for the user) instead of wiping it.
+        var relaunchLog = ReadShared(Path.Combine(_dataDir, "logs", "calendarbell.log")); // the app still has it open
+        Assert.Contains("Start-up toast reconciliation: kept 1 pending toast(s)", relaunchLog, StringComparison.Ordinal);
+        Assert.False(Record(pending.Keys[0]).Dismissed);
 
         // 7. Restart: dismissed reminders never come back.
         await RequestExitAsync();
@@ -190,6 +201,13 @@ public sealed class PublishedAppSmokeTests : IAsyncLifetime
         response.EnsureSuccessStatusCode();
         var created = await response.Content.ReadFromJsonAsync<JsonElement>(ct);
         return (uid, created.GetProperty("startUtc").GetDateTimeOffset().ToUniversalTime());
+    }
+
+    private static string ReadShared(string path)
+    {
+        using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
     }
 
     private Process StartApp() => Process.Start(new ProcessStartInfo(Exe) { UseShellExecute = false })!;

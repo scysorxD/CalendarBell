@@ -377,17 +377,37 @@ public sealed class CalendarSyncService : IAsyncDisposable
         try
         {
             SetStatus(calendarId, s => s with { State = CalendarSyncState.Refreshing, LastAttemptUtc = _time.GetUtcNow() });
-            var conditional = record.ETag is null && record.LastModified is null ? null : new ConditionalRequest(record.ETag, record.LastModified);
-            result = await _client.FetchAsync(calendar, conditional, ct).ConfigureAwait(false);
+
+            // A 304 never moves the expansion window, so the body is downloaded and expanded again at least every 12 h.
+            var fullParseIsRecent = record.LastFullParseUtc is { } lastParse && _time.GetUtcNow() - lastParse < _options.FullDownloadInterval;
+            var conditional = !fullParseIsRecent || (record.ETag is null && record.LastModified is null)
+                ? null
+                : new ConditionalRequest(record.ETag, record.LastModified);
+            try
+            {
+                result = await _client.FetchAsync(calendar, conditional, ct).ConfigureAwait(false);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException and not OutOfMemoryException)
+            {
+                result = new CalendarFetchResult(FetchStatus.NetworkError, ErrorDetail: LogSanitizer.Describe(ex));
+            }
         }
         finally
         {
             _downloadSlots.Release();
         }
 
-        if (_generations.GetValueOrDefault(calendarId) != generation || !_calendars.ContainsKey(calendarId))
+        // Settings may have changed while the request was in flight: the latest configuration wins.
+        if (_generations.GetValueOrDefault(calendarId) != generation || !_calendars.TryGetValue(calendarId, out var latest))
         {
             return new SyncOutcome(calendarId, CalendarSyncState.NeverSynced, null); // URL changed or calendar removed meanwhile
+        }
+
+        calendar = latest;
+        if (!calendar.Enabled)
+        {
+            SetStatus(calendarId, s => s with { Name = calendar.Name, Enabled = false, State = CalendarSyncState.Disabled });
+            return new SyncOutcome(calendarId, CalendarSyncState.Disabled, null);
         }
 
         var now = _time.GetUtcNow();
@@ -413,6 +433,11 @@ public sealed class CalendarSyncService : IAsyncDisposable
                 {
                     _logger.LogWarning("Calendar {CalendarId} ({Name}): invalid iCalendar content ({Reason}); keeping the last valid data", calendarId, calendar.Name, LogSanitizer.Redact(ex.Message));
                 }
+                catch (Exception ex) when (ex is not OperationCanceledException and not OutOfMemoryException)
+                {
+                    // Any other parser failure is treated as invalid content (with backoff), never as a retry loop.
+                    _logger.LogWarning("Calendar {CalendarId} ({Name}): the iCalendar content could not be processed ({Error}); keeping the last valid data", calendarId, calendar.Name, LogSanitizer.Describe(ex));
+                }
 
                 if (occurrences is null)
                 {
@@ -427,6 +452,11 @@ public sealed class CalendarSyncService : IAsyncDisposable
                     occurrences = occurrences.Select(o => o.PrivacySafeTitle is null ? o : o with { PrivacySafeTitle = null }).ToList();
                 }
 
+                if (_generations.GetValueOrDefault(calendarId) != generation || !_calendars.TryGetValue(calendarId, out var beforeReconcile) || !beforeReconcile.Enabled)
+                {
+                    return new SyncOutcome(calendarId, CalendarSyncState.NeverSynced, null); // changed while parsing
+                }
+
                 await _scheduler.ReconcileAsync(calendarId, occurrences, windowStart, windowEnd, ct).ConfigureAwait(false);
                 upcoming = occurrences.Count(o => !o.IsCancelled && o.StartUtc >= now);
                 state = CalendarSyncState.Synced;
@@ -435,6 +465,7 @@ public sealed class CalendarSyncService : IAsyncDisposable
                     ETag = result.ETag,
                     LastModified = result.LastModified,
                     LastSuccessUtc = now,
+                    LastFullParseUtc = now,
                     ConsecutiveFailures = 0,
                     NextRefreshUtc = now + _options.PollInterval,
                 };
@@ -472,11 +503,17 @@ public sealed class CalendarSyncService : IAsyncDisposable
             _logger.LogError("Saving sync state for calendar {CalendarId} failed: {Error}", calendarId, LogSanitizer.Describe(ex));
         }
 
-        _scheduler.UpdateCalendarState(calendarId, calendar.Name, calendar.Enabled, record.LastSuccessUtc);
+        if (!_calendars.TryGetValue(calendarId, out var current) || _generations.GetValueOrDefault(calendarId) != generation)
+        {
+            return new SyncOutcome(calendarId, state, message); // removed or re-pointed while finishing: leave no trace
+        }
+
+        // Name/enabled always come from the latest configuration, never from the snapshot taken before the fetch.
+        _scheduler.UpdateCalendarState(calendarId, current.Name, current.Enabled, record.LastSuccessUtc);
         SetStatus(calendarId, s => s with
         {
-            Name = calendar.Name,
-            Enabled = calendar.Enabled,
+            Name = current.Name,
+            Enabled = current.Enabled,
             State = state,
             LastAttemptUtc = now,
             LastSuccessUtc = record.LastSuccessUtc,

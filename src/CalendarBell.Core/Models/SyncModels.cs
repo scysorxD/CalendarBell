@@ -53,4 +53,7 @@ public sealed record SyncRecord(Guid CalendarId)
     public int? LastHttpStatus { get; init; }
 
     public int UpcomingCount { get; init; }
+
+    /// <summary>Last time the feed body was downloaded and expanded (a 304 does not move the expansion window).</summary>
+    public DateTimeOffset? LastFullParseUtc { get; init; }
 }

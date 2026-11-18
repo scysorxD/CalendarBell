@@ -102,6 +102,13 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
     public async Task ReconcileAsync(Guid calendarId, IReadOnlyList<EventOccurrence> events, DateTimeOffset windowStartUtc, DateTimeOffset windowEndUtc, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(events);
+        if (!_calendars.ContainsKey(calendarId))
+        {
+            // The calendar was removed (or never announced): a late refresh must not resurrect its reminders.
+            _logger.LogDebug("Reconcile for unknown calendar {CalendarId} ignored", calendarId);
+            return;
+        }
+
         List<(string Tag, string Group)> retract;
         bool changed;
         await _gate.WaitAsync(ct).ConfigureAwait(false);
@@ -346,17 +353,13 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
 
     public async Task RemoveCalendarDataAsync(Guid calendarId, CancellationToken ct)
     {
-        var retract = new List<(string Tag, string Group)>();
+        List<(string Tag, string Group)> retract;
         await _gate.WaitAsync(ct).ConfigureAwait(false);
         try
         {
+            retract = TagsNeededOnlyBy(calendarId, _time.GetUtcNow());
             foreach (var entry in _entries.Values.Where(e => e.Record.CalendarId == calendarId).ToList())
             {
-                if (entry.Record.LastToastTag is { } tag && entry.Record.LastToastGroup is { } group && !retract.Contains((tag, group)))
-                {
-                    retract.Add((tag, group));
-                }
-
                 _entries.TryRemove(entry.Record.OccurrenceKey, out _);
             }
 
@@ -435,6 +438,41 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
                 return new UpcomingReminder(x.Entry.Record, x.Entry.Occurrence, x.Calendar!.Name, status, targets);
             })
             .ToList();
+    }
+
+    /// <summary>
+    /// Tags of visible toasts whose occurrences still wait for the user (start-up reconciliation). Independent of
+    /// calendar registration, so it is correct even before the sync service has announced the calendars.
+    /// </summary>
+    public IReadOnlyList<string> AwaitingToastTags()
+    {
+        var now = _time.GetUtcNow();
+        return _entries.Values
+            .Where(e => e.Record.LastToastTag is not null && IsAwaitingUser(e.Record, now))
+            .Select(e => e.Record.LastToastTag!)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+    }
+
+    /// <summary>Privacy mode turned on: drop every cached title, in memory and in storage.</summary>
+    public async Task ClearTitlesAsync(CancellationToken ct)
+    {
+        await _gate.WaitAsync(ct).ConfigureAwait(false);
+        try
+        {
+            foreach (var entry in _entries.Values.Where(e => e.Occurrence.PrivacySafeTitle is not null).ToList())
+            {
+                _entries[entry.Record.OccurrenceKey] = entry with { Occurrence = entry.Occurrence with { PrivacySafeTitle = null } };
+            }
+
+            await _store.ClearTitlesAsync(ct).ConfigureAwait(false);
+        }
+        finally
+        {
+            _gate.Release();
+        }
+
+        RaiseChanged();
     }
 
     /// <summary>Completes when all background work queued so far (timer callbacks, calendar updates) has run.</summary>
@@ -585,11 +623,7 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
         await _gate.WaitAsync().ConfigureAwait(false);
         try
         {
-            retract = _entries.Values
-                .Where(e => e.Record.CalendarId == calendarId && e.Record.LastToastTag is not null && e.Record.LastToastGroup is not null)
-                .Select(e => (e.Record.LastToastTag!, e.Record.LastToastGroup!))
-                .Distinct()
-                .ToList();
+            retract = TagsNeededOnlyBy(calendarId, _time.GetUtcNow());
         }
         finally
         {
@@ -598,6 +632,22 @@ public sealed class ReminderScheduler : IReminderScheduler, IAsyncDisposable
 
         Retract(retract);
     }
+
+    /// <summary>
+    /// Toasts showing this calendar's occurrences that no other (active) calendar's occurrence still waits on:
+    /// disabling or removing Calendar B must not take down a group toast that still reminds about Calendar A.
+    /// </summary>
+    private List<(string Tag, string Group)> TagsNeededOnlyBy(Guid calendarId, DateTimeOffset now) =>
+        _entries.Values
+            .Where(e => e.Record.CalendarId == calendarId && e.Record.LastToastTag is not null && e.Record.LastToastGroup is not null)
+            .Select(e => (Tag: e.Record.LastToastTag!, Group: e.Record.LastToastGroup!))
+            .Distinct()
+            .Where(t => !_entries.Values.Any(o =>
+                o.Record.CalendarId != calendarId &&
+                string.Equals(o.Record.LastToastTag, t.Tag, StringComparison.Ordinal) &&
+                IsActiveCalendar(o.Record.CalendarId, out _) &&
+                IsAwaitingUser(o.Record, now)))
+            .ToList();
 
     private async Task<Exception?> TryPersistAsync(IReadOnlyList<ReminderRecord> records, IReadOnlyList<EventOccurrence> occurrences, CancellationToken ct)
     {

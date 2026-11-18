@@ -128,7 +128,7 @@ public sealed class IcsCalendarParser : ICalendarParser
             {
                 throw;
             }
-            catch (Exception ex) when (ex is EvaluationException or ArgumentException or InvalidOperationException or FormatException or OverflowException)
+            catch (Exception ex) when (ex is not OutOfMemoryException and not OperationCanceledException)
             {
                 throw new IcsFormatException("The calendar's recurrences could not be expanded.", ex);
             }

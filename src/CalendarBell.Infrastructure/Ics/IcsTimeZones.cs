@@ -77,10 +77,10 @@ internal static partial class IcsTimeZones
             return fromVtimezone;
         }
 
+        // Not cached: a fixed offset is only a guess, and another feed may define this TZID with full DST rules.
         var fromOffset = FromUtcOffsetPrefix(id);
         if (fromOffset is not null)
         {
-            Cache[id] = fromOffset;
             return fromOffset;
         }
 

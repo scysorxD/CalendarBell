@@ -23,6 +23,7 @@ public sealed class SingleInstance : IDisposable
     private readonly CancellationTokenSource _cts = new();
     private Task? _listener;
     private bool _ownsMutex;
+    private int _listenFailures;
 
     private SingleInstance(Mutex mutex, bool ownsMutex, string pipeName)
     {
@@ -34,6 +35,11 @@ public sealed class SingleInstance : IDisposable
     public event EventHandler<InstanceMessage>? MessageReceived;
 
     public bool IsPrimary => _ownsMutex;
+
+    internal string PipeName => _pipeName;
+
+    /// <summary>Times the pipe could not be created (name taken, access denied); each failure backs off.</summary>
+    internal int ListenFailures => Volatile.Read(ref _listenFailures);
 
     /// <param name="scope">Distinguishes independent instances (e.g. a test data folder); combined with the user SID.</param>
     public static SingleInstance Create(string scope)
@@ -54,7 +60,10 @@ public sealed class SingleInstance : IDisposable
             }
         }
 
-        return new SingleInstance(mutex, owns, "CalendarBell." + hash);
+        // Pipe names are machine-wide while the mutex is per session: include the session so two sessions of the
+        // same user never compete for one pipe.
+        var session = System.Diagnostics.Process.GetCurrentProcess().SessionId;
+        return new SingleInstance(mutex, owns, $"CalendarBell.{hash}.{session}");
     }
 
     public void StartListening()
@@ -126,12 +135,36 @@ public sealed class SingleInstance : IDisposable
         var user = WindowsIdentity.GetCurrent().User!;
         security.AddAccessRule(new PipeAccessRule(user, PipeAccessRights.ReadWrite | PipeAccessRights.CreateNewInstance, AccessControlType.Allow));
 
+        var backoff = TimeSpan.FromMilliseconds(250);
         while (!ct.IsCancellationRequested)
         {
+            NamedPipeServerStream server;
             try
             {
-                await using var server = NamedPipeServerStreamAcl.Create(
+                server = NamedPipeServerStreamAcl.Create(
                     _pipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 0, 0, security);
+                backoff = TimeSpan.FromMilliseconds(250);
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                // The name is taken or not accessible: retry later instead of spinning a CPU core.
+                Interlocked.Increment(ref _listenFailures);
+                try
+                {
+                    await Task.Delay(backoff, ct).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
+
+                backoff = TimeSpan.FromMilliseconds(Math.Min(backoff.TotalMilliseconds * 2, 10_000));
+                continue;
+            }
+
+            await using var serverScope = server;
+            try
+            {
                 await server.WaitForConnectionAsync(ct).ConfigureAwait(false);
                 using var buffer = new MemoryStream();
                 var chunk = new byte[4096];

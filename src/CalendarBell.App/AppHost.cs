@@ -137,23 +137,38 @@ public sealed class AppHost : IAsyncDisposable
     {
         try
         {
-            if (!TryOpenDatabase())
-            {
-                return;
-            }
-
-            await StartServicesAsync().ConfigureAwait(false);
+            // Wired regardless of storage, so a later "Reset storage" ends up fully functional.
             ApplyStartupRegistration();
             SystemEvents.TimeChanged += OnTimeChanged;
             SystemEvents.PowerModeChanged += OnPowerModeChanged;
             SystemEvents.SessionSwitch += OnSessionSwitch;
             _pauseTimer = new Timer(_ => CheckPauseExpiry(), null, TimeSpan.FromSeconds(15), TimeSpan.FromSeconds(15));
-            _logger.LogInformation("Started");
+
+            if (TryOpenDatabase() && await TryStartServicesAsync().ConfigureAwait(false))
+            {
+                _logger.LogInformation("Started");
+            }
         }
         finally
         {
             _ready.TrySetResult();
             RaiseStatusChanged();
+        }
+    }
+
+    /// <summary>A failure after the database opened (busy, I/O, unreadable row) becomes a visible Storage error.</summary>
+    private async Task<bool> TryStartServicesAsync()
+    {
+        try
+        {
+            await StartServicesAsync().ConfigureAwait(false);
+            return true;
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            StorageError = StorageCorruptedException.ForUnavailable(ex);
+            _logger.LogCritical("Starting reminders failed: {Error}", LogSanitizer.Describe(ex));
+            return false;
         }
     }
 
@@ -228,7 +243,7 @@ public sealed class AppHost : IAsyncDisposable
 
         if (before.PrivacyMode != after.PrivacyMode && Sync is not null)
         {
-            _ = Sync.PrivacyModeChangedAsync(_lifetime.Token);
+            _ = ApplyPrivacyChangeAsync(after.PrivacyMode);
         }
 
         if (before.StartWithWindows != after.StartWithWindows)
@@ -290,8 +305,29 @@ public sealed class AppHost : IAsyncDisposable
         Database = CalendarBellDatabase.ResetAfterCorruption(Paths);
         StorageError = null;
         _logger.LogWarning("Storage reset by the user");
-        await StartServicesAsync().ConfigureAwait(false);
+        await TryStartServicesAsync().ConfigureAwait(false);
         RaiseStatusChanged();
+    }
+
+    /// <summary>Privacy on: forget stored titles everywhere (spec §5.4), then re-download to keep data consistent.</summary>
+    private async Task ApplyPrivacyChangeAsync(bool privacyOn)
+    {
+        try
+        {
+            if (privacyOn && Scheduler is not null)
+            {
+                await Scheduler.ClearTitlesAsync(_lifetime.Token).ConfigureAwait(false);
+            }
+
+            if (Sync is not null)
+            {
+                await Sync.PrivacyModeChangedAsync(_lifetime.Token).ConfigureAwait(false);
+            }
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _logger.LogWarning("Applying the privacy change failed: {Error}", LogSanitizer.Describe(ex));
+        }
     }
 
     /// <summary>Forwarded from a second process (pipe) or raised by Windows when a toast is clicked.</summary>
@@ -445,26 +481,25 @@ public sealed class AppHost : IAsyncDisposable
 
         await Scheduler.StartAsync(_lifetime.Token).ConfigureAwait(false);
         await store.PruneBatchesAsync(Time.GetUtcNow() - TimeSpan.FromDays(2), _lifetime.Token).ConfigureAwait(false);
-        await ReconcileVisibleToastsAsync(store).ConfigureAwait(false);
         await Sync.StartAsync(_lifetime.Token).ConfigureAwait(false);
+        await ReconcileVisibleToastsAsync().ConfigureAwait(false);
     }
 
-    /// <summary>Start-up reconciliation: take down toasts whose occurrences were dismissed, snoozed, cancelled or expired meanwhile.</summary>
-    private async Task ReconcileVisibleToastsAsync(SqliteReminderStore store)
+    /// <summary>
+    /// Start-up reconciliation: take down toasts whose occurrences were dismissed, snoozed, cancelled or expired
+    /// meanwhile — and keep every toast that still waits for the user (e.g. after a sign-in between T−15 and T).
+    /// </summary>
+    private async Task ReconcileVisibleToastsAsync()
     {
         if (Toasts is null || Scheduler is null)
         {
             return;
         }
 
-        var now = Time.GetUtcNow();
-        var awaitingTags = Scheduler.GetUpcoming(now - TimeSpan.FromDays(2), now + TimeSpan.FromDays(31))
-            .Where(u => u.Status == ReminderStatus.Notified && u.Record.LastToastTag is not null)
-            .Select(u => u.Record.LastToastTag!)
-            .ToHashSet(StringComparer.Ordinal);
-        await Toasts.RemoveWhereAsync((tag, group) =>
+        var awaitingTags = Scheduler.AwaitingToastTags().ToHashSet(StringComparer.Ordinal);
+        var removed = await Toasts.RemoveWhereAsync((tag, group) =>
             group == NotificationBatcher.TestGroup || (group == NotificationBatcher.ReminderGroup && !awaitingTags.Contains(tag))).ConfigureAwait(false);
-        _ = store;
+        _logger.LogInformation("Start-up toast reconciliation: kept {Kept} pending toast(s), removed {Removed} obsolete", awaitingTags.Count, removed);
     }
 
     private void ApplyStartupRegistration()

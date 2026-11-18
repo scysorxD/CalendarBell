@@ -139,6 +139,7 @@ public sealed class StorageTests : IDisposable
             LastError = "Server error",
             LastHttpStatus = 503,
             UpcomingCount = 7,
+            LastFullParseUtc = Start.AddHours(-3),
         };
 
         await store.SaveAsync(record, Ct);
@@ -146,6 +147,30 @@ public sealed class StorageTests : IDisposable
         Assert.Equal(record, Assert.Single(await store.GetAllAsync(Ct)));
         await store.DeleteAsync(CalendarA, Ct);
         Assert.Empty(await store.GetAllAsync(Ct));
+    }
+
+    [Fact]
+    public async Task Version_1_database_is_migrated_to_version_2_keeping_data()
+    {
+        using (var db = OpenDatabase())
+        {
+            await new SqliteSyncStateStore(db).SaveAsync(new SyncRecord(CalendarA) { ETag = "\"v1\"", UpcomingCount = 3 }, Ct);
+            using var connection = db.OpenConnection();
+            using var downgrade = connection.CreateCommand();
+            downgrade.CommandText = "ALTER TABLE SyncState DROP COLUMN last_full_parse_utc; DELETE FROM SchemaMigrations WHERE version = 2;";
+            downgrade.ExecuteNonQuery();
+        }
+
+        SqliteConnection.ClearAllPools();
+        using var migrated = OpenDatabase();
+        var store = new SqliteSyncStateStore(migrated);
+        var record = Assert.Single(await store.GetAllAsync(Ct));
+
+        Assert.Equal(2, migrated.SchemaVersion);
+        Assert.Equal("\"v1\"", record.ETag);
+        Assert.Null(record.LastFullParseUtc);
+        await store.SaveAsync(record with { LastFullParseUtc = Start }, Ct);
+        Assert.Equal(Start, Assert.Single(await store.GetAllAsync(Ct)).LastFullParseUtc);
     }
 
     [Fact]
